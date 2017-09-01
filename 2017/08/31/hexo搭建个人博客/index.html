@@ -103,7 +103,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="hexo,博客," />
 
 
 
@@ -119,17 +119,18 @@
 
 
 
-<meta name="description" content="测试在首页显示一篇文章的部分内容，并提供一个链接跳转到全文页面是一个常见的需求NexT 提供三种方式来控制文章在首页的显示方式。 也就是说，在首页显示文章的摘录并显示 阅读全文 按钮，可以通过以下方法：">
+<meta name="description" content="引言想拥有一个个人博客，利用hexo可以满足基本需求，博客应有的基本功能都可以实现 环境ubantu mac windows 均可 必备git  nodejs  npm  nvm  具体怎么安装百度一下即可方法很多 注意所关联github上个人仓库必须和用户名相同 如用户名为heweiwei 则仓库名应该为heweiwei.github.io 中文乱码解决 vimrc添加一下内容set filee">
+<meta name="keywords" content="hexo,博客">
 <meta property="og:type" content="article">
-<meta property="og:title" content="测试帖子">
-<meta property="og:url" content="http://heweiblog.top/2017/09/01/测试帖子/index.html">
+<meta property="og:title" content="hexo搭建个人博客">
+<meta property="og:url" content="http://heweiblog.top/2017/08/31/hexo搭建个人博客/index.html">
 <meta property="og:site_name" content="走在启程的路上">
-<meta property="og:description" content="测试在首页显示一篇文章的部分内容，并提供一个链接跳转到全文页面是一个常见的需求NexT 提供三种方式来控制文章在首页的显示方式。 也就是说，在首页显示文章的摘录并显示 阅读全文 按钮，可以通过以下方法：">
+<meta property="og:description" content="引言想拥有一个个人博客，利用hexo可以满足基本需求，博客应有的基本功能都可以实现 环境ubantu mac windows 均可 必备git  nodejs  npm  nvm  具体怎么安装百度一下即可方法很多 注意所关联github上个人仓库必须和用户名相同 如用户名为heweiwei 则仓库名应该为heweiwei.github.io 中文乱码解决 vimrc添加一下内容set filee">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-01T03:18:56.898Z">
+<meta property="og:updated_time" content="2017-09-01T20:23:31.837Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="测试帖子">
-<meta name="twitter:description" content="测试在首页显示一篇文章的部分内容，并提供一个链接跳转到全文页面是一个常见的需求NexT 提供三种方式来控制文章在首页的显示方式。 也就是说，在首页显示文章的摘录并显示 阅读全文 按钮，可以通过以下方法：">
+<meta name="twitter:title" content="hexo搭建个人博客">
+<meta name="twitter:description" content="引言想拥有一个个人博客，利用hexo可以满足基本需求，博客应有的基本功能都可以实现 环境ubantu mac windows 均可 必备git  nodejs  npm  nvm  具体怎么安装百度一下即可方法很多 注意所关联github上个人仓库必须和用户名相同 如用户名为heweiwei 则仓库名应该为heweiwei.github.io 中文乱码解决 vimrc添加一下内容set filee">
 
 
 
@@ -159,13 +160,13 @@
 
 
 
-  <link rel="canonical" href="http://heweiblog.top/2017/09/01/测试帖子/"/>
+  <link rel="canonical" href="http://heweiblog.top/2017/08/31/hexo搭建个人博客/"/>
 
 
 
 
 
-  <title>测试帖子 | 走在启程的路上</title>
+  <title>hexo搭建个人博客 | 走在启程的路上</title>
   
 
 
@@ -298,22 +299,26 @@
   
     <div class="site-search">
       
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
     <span class="popup-btn-close">
       <i class="fa fa-times-circle"></i>
     </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off"
-             placeholder="搜索..." spellcheck="false"
-             type="text" id="local-search-input">
-    </div>
   </div>
-  <div id="local-search-result"></div>
-</div>
+
 
 
 
@@ -346,7 +351,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://heweiblog.top/2017/09/01/测试帖子/">
+    <link itemprop="mainEntityOfPage" href="http://heweiblog.top/2017/08/31/hexo搭建个人博客/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="贺伟伟">
@@ -363,7 +368,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">测试帖子</h1>
+          <h1 class="post-title" itemprop="name headline">hexo搭建个人博客</h1>
         
 
         <div class="post-meta">
@@ -375,8 +380,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T11:17:17+08:00">
-                2017-09-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-31T10:46:56+08:00">
+                2017-08-31
               </time>
             
 
@@ -386,6 +391,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/搭建博客/" itemprop="url" rel="index">
+                    <span itemprop="name">搭建博客</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -394,9 +421,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/09/01/测试帖子/#comments" itemprop="discussionUrl">
+                <a href="/2017/08/31/hexo搭建个人博客/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/09/01/测试帖子/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/08/31/hexo搭建个人博客/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -424,7 +451,16 @@
       
 
       
-        <h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>在首页显示一篇文章的部分内容，并提供一个链接跳转到全文页面是一个常见的需求<br>NexT 提供三种方式来控制文章在首页的显示方式。 也就是说，在首页显示文章的摘<br>录并显示 阅读全文 按钮，可以通过以下方法：</p>
+        <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>想拥有一个个人博客，利用hexo可以满足基本需求，博客应有的基本功能都可以实现</p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>ubantu mac windows 均可</p>
+<h2 id="必备"><a href="#必备" class="headerlink" title="必备"></a>必备</h2><p>git  nodejs  npm  nvm  具体怎么安装百度一下即可方法很多</p>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>所关联github上个人仓库必须和用户名相同 如用户名为heweiwei 则仓库名应该为heweiwei.github.io</p>
+<h2 id="中文乱码"><a href="#中文乱码" class="headerlink" title="中文乱码"></a>中文乱码</h2><p>解决 vimrc添加一下内容<br>set fileencodings=utf-8,gb2312,gbk,gb18030<br>set termencoding=utf-8<br>set encoding=prc</p>
+<h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><p>前面各个必备软件安装正常<br>执行 npm install -g hexo-cli </p>
+<h3 id="推送到远程"><a href="#推送到远程" class="headerlink" title="推送到远程"></a>推送到远程</h3><p>hexo init hexoweb<br>cd hexoweb/<br>npm install<br>hexo clean<br>hexo new your post name<br>hexo generate<br>hexo deploy<br>当然这样做之后访问的页面很简单具体修改参见:<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="external">hexo官方文档</a></p>
+<h3 id="访问"><a href="#访问" class="headerlink" title="访问"></a>访问</h3><p>浏览器输入yourname.github.io即可访问<br>也可以去域名服务商买一个域名<br>价格不等我买的.top顶级域第一年8块大洋</p>
+<h2 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h2><p>我用的是next主题简单大体参照<a href="http://theme-next.iissnan.com/theme-settings.html" target="_blank" rel="external">next官方使用文档</a>就够了<br>更换背景：<br>找一个背景图片放到 hexo（hexo工程文件）themes/next/source/images 下<br>修改themes/next/source/css/_custom/custom.styl文件<br>在文件加上一代码<br> body { background:url(/images/yourbackGround.jpg);} </p>
+<h2 id="文章"><a href="#文章" class="headerlink" title="文章"></a>文章</h2><p>外观设计基本搞定之后剩下的就是苦力活了<br>参照<a href="https://hexo.io/zh-cn/docs/index.html" target="_blank" rel="external">hexo官方文档</a>基本都能搞定</p>
 
       
     </div>
@@ -435,10 +471,47 @@
     
 
     
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>记录学习点滴，沉淀美好生活，支持原创，</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wx.jpg" alt="贺伟伟 WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/zfb.jpg" alt="贺伟伟 Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
 
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/hexo/" rel="tag"># hexo</a>
+          
+            <a href="/tags/博客/" rel="tag"># 博客</a>
+          
+        </div>
       
 
       
@@ -455,7 +528,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/01/测试帖子-1/" rel="prev" title="测试帖子">
+              <a href="/2017/09/01/测试帖子-2/" rel="prev" title="测试帖子">
                 测试帖子 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -544,14 +617,32 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
           
 
           
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
 
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
           
 
         </nav>
@@ -614,6 +705,26 @@
                   <a href="http://www.tmall.com" title="天猫" target="_blank">天猫</a>
                 </li>
               
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.douban.com" title="豆瓣" target="_blank">豆瓣</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhihu.com" title="知乎" target="_blank">知乎</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.v.qq.com/cartoon/" title="腾讯动漫" target="_blank">腾讯动漫</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.jd.com" title="京东商场" target="_blank">京东商场</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.csdn.net" title="CSDN" target="_blank">CSDN</a>
+                </li>
+              
             </ul>
           </div>
         
@@ -633,7 +744,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#测试"><span class="nav-number">1.</span> <span class="nav-text">测试</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境"><span class="nav-number">2.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#必备"><span class="nav-number">3.</span> <span class="nav-text">必备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意"><span class="nav-number">4.</span> <span class="nav-text">注意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中文乱码"><span class="nav-number">5.</span> <span class="nav-text">中文乱码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装hexo"><span class="nav-number">6.</span> <span class="nav-text">安装hexo</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#推送到远程"><span class="nav-number">6.1.</span> <span class="nav-text">推送到远程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问"><span class="nav-number">6.2.</span> <span class="nav-text">访问</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主题"><span class="nav-number">7.</span> <span class="nav-text">主题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文章"><span class="nav-number">8.</span> <span class="nav-text">文章</span></a></li></ol></div>
             
 
           </div>
@@ -717,9 +828,6 @@
 
 
 
-  
-  
-
 
 
 
@@ -743,12 +851,6 @@
 
   
   <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-  
-  <script type="text/javascript" src="/lib/three/three.min.js"></script>
-
-  
-  <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
 
 
   
@@ -792,9 +894,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://heweiblog.top/2017/09/01/测试帖子/';
-          this.page.identifier = '2017/09/01/测试帖子/';
-          this.page.title = '测试帖子';
+          this.page.url = 'http://heweiblog.top/2017/08/31/hexo搭建个人博客/';
+          this.page.identifier = '2017/08/31/hexo搭建个人博客/';
+          this.page.title = 'hexo搭建个人博客';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://.disqus.com/embed.js';
@@ -1149,6 +1251,19 @@
   </script>
 
 
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.2"></script>
 
 
 
