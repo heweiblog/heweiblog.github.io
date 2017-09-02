@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -127,7 +127,7 @@
 <meta property="og:site_name" content="走在启程的路上">
 <meta property="og:description" content="引言想拥有一个个人博客，利用hexo可以满足基本需求，博客应有的基本功能都可以实现 环境ubantu mac windows 均可 必备git  nodejs  npm  nvm  具体怎么安装百度一下即可方法很多 注意所关联github上个人仓库必须和用户名相同 如用户名为heweiwei 则仓库名应该为heweiwei.github.io 中文乱码解决 vimrc添加一下内容set filee">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-01T20:23:31.837Z">
+<meta property="og:updated_time" content="2017-09-02T12:05:06.523Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo搭建个人博客">
 <meta name="twitter:description" content="引言想拥有一个个人博客，利用hexo可以满足基本需求，博客应有的基本功能都可以实现 环境ubantu mac windows 均可 必备git  nodejs  npm  nvm  具体怎么安装百度一下即可方法很多 注意所关联github上个人仓库必须和用户名相同 如用户名为heweiwei 则仓库名应该为heweiwei.github.io 中文乱码解决 vimrc添加一下内容set filee">
@@ -138,9 +138,9 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Mist',
     version: '5.1.2',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
@@ -459,8 +459,9 @@
 <h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><p>前面各个必备软件安装正常<br>执行 npm install -g hexo-cli </p>
 <h3 id="推送到远程"><a href="#推送到远程" class="headerlink" title="推送到远程"></a>推送到远程</h3><p>hexo init hexoweb<br>cd hexoweb/<br>npm install<br>hexo clean<br>hexo new your post name<br>hexo generate<br>hexo deploy<br>当然这样做之后访问的页面很简单具体修改参见:<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="external">hexo官方文档</a></p>
 <h3 id="访问"><a href="#访问" class="headerlink" title="访问"></a>访问</h3><p>浏览器输入yourname.github.io即可访问<br>也可以去域名服务商买一个域名<br>价格不等我买的.top顶级域第一年8块大洋</p>
-<h2 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h2><p>我用的是next主题简单大体参照<a href="http://theme-next.iissnan.com/theme-settings.html" target="_blank" rel="external">next官方使用文档</a>就够了<br>更换背景：<br>找一个背景图片放到 hexo（hexo工程文件）themes/next/source/images 下<br>修改themes/next/source/css/_custom/custom.styl文件<br>在文件加上一代码<br> body { background:url(/images/yourbackGround.jpg);} </p>
+<h2 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h2><p>我用的是next主题简单大体参照<a href="http://theme-next.iissnan.com/theme-settings.html" target="_blank" rel="external">next官方使用文档</a>就够了<br>更换背景：<br>找一个背景图片放到 hexo（hexo工程文件）themes/next/source/images 下<br>修改themes/next/source/css/_custom/custom.styl文件<br>在文件加上一代码<br> body { background:url(/images/yourbackGround.jpg);}<br>注意：此方法会应用到全局</p>
 <h2 id="文章"><a href="#文章" class="headerlink" title="文章"></a>文章</h2><p>外观设计基本搞定之后剩下的就是苦力活了<br>参照<a href="https://hexo.io/zh-cn/docs/index.html" target="_blank" rel="external">hexo官方文档</a>基本都能搞定</p>
+<h2 id="修改底部"><a href="#修改底部" class="headerlink" title="修改底部"></a>修改底部</h2><p>一开始我也不知道怎么改,可以参照<a href="http://www.jianshu.com/p/4fbc57269f1b" target="_blank" rel="external">Codeagles 原创文章</a><br>按照作者的方法基本上搞定了</p>
 
       
     </div>
@@ -469,11 +470,19 @@
     
 
     
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/mouse.jpg" alt="贺伟伟 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>不断学习，不断成长，进步在于积累，一起分享知识！</div>
+</div>
+
+      </div>
+    
 
     
       <div>
         <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>记录学习点滴，沉淀美好生活，支持原创，</div>
+  <div>记录学习点滴，沉淀美好生活，支持原创！</div>
   <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
     <span>Donate</span>
   </button>
@@ -501,6 +510,24 @@
       </div>
     
 
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    贺伟伟
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://heweiblog.top/2017/08/31/hexo搭建个人博客/" title="hexo搭建个人博客">http://heweiblog.top/2017/08/31/hexo搭建个人博客/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
     
 
     <footer class="post-footer">
@@ -548,6 +575,32 @@
 
 
     <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微薄</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
       
     </div>
   </div>
@@ -744,7 +797,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境"><span class="nav-number">2.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#必备"><span class="nav-number">3.</span> <span class="nav-text">必备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意"><span class="nav-number">4.</span> <span class="nav-text">注意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中文乱码"><span class="nav-number">5.</span> <span class="nav-text">中文乱码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装hexo"><span class="nav-number">6.</span> <span class="nav-text">安装hexo</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#推送到远程"><span class="nav-number">6.1.</span> <span class="nav-text">推送到远程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问"><span class="nav-number">6.2.</span> <span class="nav-text">访问</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主题"><span class="nav-number">7.</span> <span class="nav-text">主题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文章"><span class="nav-number">8.</span> <span class="nav-text">文章</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境"><span class="nav-number">2.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#必备"><span class="nav-number">3.</span> <span class="nav-text">必备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意"><span class="nav-number">4.</span> <span class="nav-text">注意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中文乱码"><span class="nav-number">5.</span> <span class="nav-text">中文乱码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装hexo"><span class="nav-number">6.</span> <span class="nav-text">安装hexo</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#推送到远程"><span class="nav-number">6.1.</span> <span class="nav-text">推送到远程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问"><span class="nav-number">6.2.</span> <span class="nav-text">访问</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主题"><span class="nav-number">7.</span> <span class="nav-text">主题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文章"><span class="nav-number">8.</span> <span class="nav-text">文章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改底部"><span class="nav-number">9.</span> <span class="nav-text">修改底部</span></a></li></ol></div>
             
 
           </div>
@@ -777,11 +830,11 @@
 </div>
 
 
-  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+  <div class="powered-by">  个人专属</div>
 
   <span class="post-meta-divider">|</span>
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+  <div class="theme-info">博客 &mdash;  v5.1.2</div>
 
 
         
