@@ -103,7 +103,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="C面试," />
+  <meta name="keywords" content="c语言" />
 
 
 
@@ -119,18 +119,18 @@
 
 
 
-<meta name="description" content="引言曾经面试做过的一些面试题目 C/C++题目：1、比较字符串输出它们第一个不同字母的位置，大小写不敏感  // if(str1[i] == (str2[i] | 0x20))int cmpstr(const char str1,const char str2){    int i = 0; while(str1[i] != &amp;apos;\0&amp;apos; &amp;amp;&amp;amp; str2[i] !=">
-<meta name="keywords" content="C面试">
+<meta name="description" content="本文罗列了一些应届生可能会遇到的c语言非常基础的面试题，如果你是正在求职的毕业生，本文可能对你会有所帮助。">
+<meta name="keywords" content="c语言">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C语言面试">
 <meta property="og:url" content="http://heweiblog.top/2017/09/01/C语言面试/index.html">
 <meta property="og:site_name" content="走在启程的路上">
-<meta property="og:description" content="引言曾经面试做过的一些面试题目 C/C++题目：1、比较字符串输出它们第一个不同字母的位置，大小写不敏感  // if(str1[i] == (str2[i] | 0x20))int cmpstr(const char str1,const char str2){    int i = 0; while(str1[i] != &amp;apos;\0&amp;apos; &amp;amp;&amp;amp; str2[i] !=">
+<meta property="og:description" content="本文罗列了一些应届生可能会遇到的c语言非常基础的面试题，如果你是正在求职的毕业生，本文可能对你会有所帮助。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-01T20:23:31.837Z">
+<meta property="og:updated_time" content="2017-09-02T18:56:40.418Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C语言面试">
-<meta name="twitter:description" content="引言曾经面试做过的一些面试题目 C/C++题目：1、比较字符串输出它们第一个不同字母的位置，大小写不敏感  // if(str1[i] == (str2[i] | 0x20))int cmpstr(const char str1,const char str2){    int i = 0; while(str1[i] != &amp;apos;\0&amp;apos; &amp;amp;&amp;amp; str2[i] !=">
+<meta name="twitter:description" content="本文罗列了一些应届生可能会遇到的c语言非常基础的面试题，如果你是正在求职的毕业生，本文可能对你会有所帮助。">
 
 
 
@@ -437,6 +437,10 @@
           
 
           
+              <div class="post-description">
+                  本文罗列了一些应届生可能会遇到的c语言非常基础的面试题，如果你是正在求职的毕业生，本文可能对你会有所帮助。
+              </div>
+          
 
         </div>
       </header>
@@ -451,16 +455,17 @@
       
 
       
-        <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>曾经面试做过的一些面试题目</p>
+        <a id="more"></a>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>曾经面试做过的一些面试题目</p>
 <h2 id="C-C-题目："><a href="#C-C-题目：" class="headerlink" title="C/C++题目："></a>C/C++题目：</h2><h3 id="1、"><a href="#1、" class="headerlink" title="1、"></a>1、</h3><p>比较字符串<br>输出它们第一个不同字母的位置，大小写不敏感  // if(str1[i] == (str2[i] | 0x20))<br>int cmpstr(const char<em> str1,const char</em> str2)<br>{<br>    int i = 0;</p>
 <pre><code>while(str1[i] != &apos;\0&apos; &amp;&amp; str2[i] != &apos;\0&apos;)
 {
     if(str1[i] == (str2[i] | 0x20))
-{
-    i++;
-    continue;
-}
-return i+1;
+    {
+        i++;
+        continue;
+    }
+    return i+1;
 }
 return 0;
 </code></pre><p>}</p>
@@ -1255,7 +1260,7 @@ var jiathis_config={
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1266,7 +1271,7 @@ var jiathis_config={
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1325,14 +1330,6 @@ var jiathis_config={
                 </li>
               
                 <li class="links-of-blogroll-item">
-                  <a href="http://www.youku.com" title="优酷" target="_blank">优酷</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://www.tmall.com" title="天猫" target="_blank">天猫</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
                   <a href="http://www.douban.com" title="豆瓣" target="_blank">豆瓣</a>
                 </li>
               
@@ -1341,15 +1338,23 @@ var jiathis_config={
                 </li>
               
                 <li class="links-of-blogroll-item">
-                  <a href="http://www.v.qq.com/cartoon/" title="腾讯动漫" target="_blank">腾讯动漫</a>
+                  <a href="https://www.cnblogs.com/" title="博客园" target="_blank">博客园</a>
                 </li>
               
                 <li class="links-of-blogroll-item">
-                  <a href="http://www.jd.com" title="京东商场" target="_blank">京东商场</a>
+                  <a href="http://bbs.51cto.com/" title="51cto" target="_blank">51cto</a>
                 </li>
               
                 <li class="links-of-blogroll-item">
                   <a href="http://www.csdn.net" title="CSDN" target="_blank">CSDN</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://hexo.io" title="Hexo" target="_blank">Hexo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.v.qq.com/cartoon/" title="腾讯动漫" target="_blank">腾讯动漫</a>
                 </li>
               
             </ul>

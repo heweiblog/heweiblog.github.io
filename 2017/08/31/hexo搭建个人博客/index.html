@@ -103,7 +103,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="hexo,博客," />
+  <meta name="keywords" content="hexo 博客" />
 
 
 
@@ -119,18 +119,18 @@
 
 
 
-<meta name="description" content="引言想拥有一个个人博客，利用hexo可以满足基本需求，博客应有的基本功能都可以实现 环境ubantu mac windows 均可 必备git  nodejs  npm  nvm  具体怎么安装百度一下即可方法很多 注意所关联github上个人仓库必须和用户名相同 如用户名为heweiwei 则仓库名应该为heweiwei.github.io 中文乱码解决 vimrc添加一下内容set filee">
-<meta name="keywords" content="hexo,博客">
+<meta name="description" content="想快速的搭建一个个人博客？本文讲述了如何利用hexo和github搭建一个炫酷的个人博客。">
+<meta name="keywords" content="hexo 博客">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hexo搭建个人博客">
 <meta property="og:url" content="http://heweiblog.top/2017/08/31/hexo搭建个人博客/index.html">
 <meta property="og:site_name" content="走在启程的路上">
-<meta property="og:description" content="引言想拥有一个个人博客，利用hexo可以满足基本需求，博客应有的基本功能都可以实现 环境ubantu mac windows 均可 必备git  nodejs  npm  nvm  具体怎么安装百度一下即可方法很多 注意所关联github上个人仓库必须和用户名相同 如用户名为heweiwei 则仓库名应该为heweiwei.github.io 中文乱码解决 vimrc添加一下内容set filee">
+<meta property="og:description" content="想快速的搭建一个个人博客？本文讲述了如何利用hexo和github搭建一个炫酷的个人博客。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-02T12:05:06.523Z">
+<meta property="og:updated_time" content="2017-09-02T18:34:31.666Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo搭建个人博客">
-<meta name="twitter:description" content="引言想拥有一个个人博客，利用hexo可以满足基本需求，博客应有的基本功能都可以实现 环境ubantu mac windows 均可 必备git  nodejs  npm  nvm  具体怎么安装百度一下即可方法很多 注意所关联github上个人仓库必须和用户名相同 如用户名为heweiwei 则仓库名应该为heweiwei.github.io 中文乱码解决 vimrc添加一下内容set filee">
+<meta name="twitter:description" content="想快速的搭建一个个人博客？本文讲述了如何利用hexo和github搭建一个炫酷的个人博客。">
 
 
 
@@ -437,6 +437,10 @@
           
 
           
+              <div class="post-description">
+                  想快速的搭建一个个人博客？本文讲述了如何利用hexo和github搭建一个炫酷的个人博客。
+              </div>
+          
 
         </div>
       </header>
@@ -451,17 +455,19 @@
       
 
       
-        <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>想拥有一个个人博客，利用hexo可以满足基本需求，博客应有的基本功能都可以实现</p>
+        <a id="more"></a>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>想拥有一个个人博客，利用hexo可以满足基本需求，博客应有的基本功能都可以实现</p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>ubantu mac windows 均可</p>
 <h2 id="必备"><a href="#必备" class="headerlink" title="必备"></a>必备</h2><p>git  nodejs  npm  nvm  具体怎么安装百度一下即可方法很多</p>
 <h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>所关联github上个人仓库必须和用户名相同 如用户名为heweiwei 则仓库名应该为heweiwei.github.io</p>
 <h2 id="中文乱码"><a href="#中文乱码" class="headerlink" title="中文乱码"></a>中文乱码</h2><p>解决 vimrc添加一下内容<br>set fileencodings=utf-8,gb2312,gbk,gb18030<br>set termencoding=utf-8<br>set encoding=prc</p>
 <h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><p>前面各个必备软件安装正常<br>执行 npm install -g hexo-cli </p>
-<h3 id="推送到远程"><a href="#推送到远程" class="headerlink" title="推送到远程"></a>推送到远程</h3><p>hexo init hexoweb<br>cd hexoweb/<br>npm install<br>hexo clean<br>hexo new your post name<br>hexo generate<br>hexo deploy<br>当然这样做之后访问的页面很简单具体修改参见:<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="external">hexo官方文档</a></p>
-<h3 id="访问"><a href="#访问" class="headerlink" title="访问"></a>访问</h3><p>浏览器输入yourname.github.io即可访问<br>也可以去域名服务商买一个域名<br>价格不等我买的.top顶级域第一年8块大洋</p>
-<h2 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h2><p>我用的是next主题简单大体参照<a href="http://theme-next.iissnan.com/theme-settings.html" target="_blank" rel="external">next官方使用文档</a>就够了<br>更换背景：<br>找一个背景图片放到 hexo（hexo工程文件）themes/next/source/images 下<br>修改themes/next/source/css/_custom/custom.styl文件<br>在文件加上一代码<br> body { background:url(/images/yourbackGround.jpg);}<br>注意：此方法会应用到全局</p>
-<h2 id="文章"><a href="#文章" class="headerlink" title="文章"></a>文章</h2><p>外观设计基本搞定之后剩下的就是苦力活了<br>参照<a href="https://hexo.io/zh-cn/docs/index.html" target="_blank" rel="external">hexo官方文档</a>基本都能搞定</p>
-<h2 id="修改底部"><a href="#修改底部" class="headerlink" title="修改底部"></a>修改底部</h2><p>一开始我也不知道怎么改,可以参照<a href="http://www.jianshu.com/p/4fbc57269f1b" target="_blank" rel="external">Codeagles 原创文章</a><br>按照作者的方法基本上搞定了</p>
+<h2 id="推送到远程"><a href="#推送到远程" class="headerlink" title="推送到远程"></a>推送到远程</h2><p>hexo init hexoweb<br>cd hexoweb/<br>npm install<br>hexo clean<br>hexo new your post name<br>hexo generate<br>hexo deploy<br>当然这样做之后访问的页面很简单具体修改参见:<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="external">hexo官方文档</a></p>
+<h2 id="访问"><a href="#访问" class="headerlink" title="访问"></a>访问</h2><p>浏览器输入yourname.github.io即可访问<br>也可以去域名服务商买一个域名<br>价格不等我买的.top顶级域第一年8块大洋</p>
+<h2 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h2><h3 id="next主题"><a href="#next主题" class="headerlink" title="next主题"></a>next主题</h3><p>我用的是next主题简单大体参照<a href="http://theme-next.iissnan.com/theme-settings.html" target="_blank" rel="external">next官方使用文档</a>就够了<br>更换背景：<br>找一个背景图片放到 hexo（hexo工程文件）themes/next/source/images 下<br>修改themes/next/source/css/_custom/custom.styl文件<br>在文件加上一代码<br> body { background:url(/images/yourbackGround.jpg);}<br>注意：此方法会应用到全局</p>
+<h3 id="标题背景"><a href="#标题背景" class="headerlink" title="标题背景"></a>标题背景</h3><p>修改next/source/css/_custom/custom.styl<br>添加.site-meta {background: $blue;} //修改为自己喜欢的颜色</p>
+<h3 id="文章"><a href="#文章" class="headerlink" title="文章"></a>文章</h3><p>外观设计基本搞定之后剩下的就是苦力活了<br>参照<a href="https://hexo.io/zh-cn/docs/index.html" target="_blank" rel="external">hexo官方文档</a>基本都能搞定</p>
+<h3 id="修改底部"><a href="#修改底部" class="headerlink" title="修改底部"></a>修改底部</h3><p>一开始我也不知道怎么改,可以参照<a href="http://www.jianshu.com/p/4fbc57269f1b" target="_blank" rel="external">Codeagles 原创文章</a><br>按照作者的方法基本上搞定了</p>
 
       
     </div>
@@ -681,7 +687,7 @@ var jiathis_config={
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -692,7 +698,7 @@ var jiathis_config={
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -751,14 +757,6 @@ var jiathis_config={
                 </li>
               
                 <li class="links-of-blogroll-item">
-                  <a href="http://www.youku.com" title="优酷" target="_blank">优酷</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://www.tmall.com" title="天猫" target="_blank">天猫</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
                   <a href="http://www.douban.com" title="豆瓣" target="_blank">豆瓣</a>
                 </li>
               
@@ -767,15 +765,23 @@ var jiathis_config={
                 </li>
               
                 <li class="links-of-blogroll-item">
-                  <a href="http://www.v.qq.com/cartoon/" title="腾讯动漫" target="_blank">腾讯动漫</a>
+                  <a href="https://www.cnblogs.com/" title="博客园" target="_blank">博客园</a>
                 </li>
               
                 <li class="links-of-blogroll-item">
-                  <a href="http://www.jd.com" title="京东商场" target="_blank">京东商场</a>
+                  <a href="http://bbs.51cto.com/" title="51cto" target="_blank">51cto</a>
                 </li>
               
                 <li class="links-of-blogroll-item">
                   <a href="http://www.csdn.net" title="CSDN" target="_blank">CSDN</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://hexo.io" title="Hexo" target="_blank">Hexo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.v.qq.com/cartoon/" title="腾讯动漫" target="_blank">腾讯动漫</a>
                 </li>
               
             </ul>
@@ -797,7 +803,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境"><span class="nav-number">2.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#必备"><span class="nav-number">3.</span> <span class="nav-text">必备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意"><span class="nav-number">4.</span> <span class="nav-text">注意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中文乱码"><span class="nav-number">5.</span> <span class="nav-text">中文乱码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装hexo"><span class="nav-number">6.</span> <span class="nav-text">安装hexo</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#推送到远程"><span class="nav-number">6.1.</span> <span class="nav-text">推送到远程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问"><span class="nav-number">6.2.</span> <span class="nav-text">访问</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主题"><span class="nav-number">7.</span> <span class="nav-text">主题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文章"><span class="nav-number">8.</span> <span class="nav-text">文章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改底部"><span class="nav-number">9.</span> <span class="nav-text">修改底部</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境"><span class="nav-number">2.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#必备"><span class="nav-number">3.</span> <span class="nav-text">必备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意"><span class="nav-number">4.</span> <span class="nav-text">注意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中文乱码"><span class="nav-number">5.</span> <span class="nav-text">中文乱码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装hexo"><span class="nav-number">6.</span> <span class="nav-text">安装hexo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推送到远程"><span class="nav-number">7.</span> <span class="nav-text">推送到远程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#访问"><span class="nav-number">8.</span> <span class="nav-text">访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主题"><span class="nav-number">9.</span> <span class="nav-text">主题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#next主题"><span class="nav-number">9.1.</span> <span class="nav-text">next主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标题背景"><span class="nav-number">9.2.</span> <span class="nav-text">标题背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文章"><span class="nav-number">9.3.</span> <span class="nav-text">文章</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改底部"><span class="nav-number">9.4.</span> <span class="nav-text">修改底部</span></a></li></ol></li></ol></div>
             
 
           </div>

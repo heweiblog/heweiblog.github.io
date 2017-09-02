@@ -103,7 +103,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="git," />
+  <meta name="keywords" content="git" />
 
 
 
@@ -119,18 +119,18 @@
 
 
 
-<meta name="description" content="引言我的环境：ubantu17.04 其他linux发行版本安装使用大同小异安装git：sudo apt-get install git首先必须有一个githup账号 去官网注册即可 同时绑定邮箱有了账号后创建远程仓库 比如我创建的仓库名字为project 密钥本地创建密钥命令如下ssh-keygen -t rsa -C “邮箱地址”公钥存放在用户主目录 ~/.ssh/id_rsa.pub复制到官">
+<meta name="description" content="git作为目前最流行的版本管理工具还是必要学习一下的，本文讲述了如何使用远程。">
 <meta name="keywords" content="git">
 <meta property="og:type" content="article">
 <meta property="og:title" content="git远程仓库关联">
 <meta property="og:url" content="http://heweiblog.top/2017/09/01/git远程仓库关联/index.html">
 <meta property="og:site_name" content="走在启程的路上">
-<meta property="og:description" content="引言我的环境：ubantu17.04 其他linux发行版本安装使用大同小异安装git：sudo apt-get install git首先必须有一个githup账号 去官网注册即可 同时绑定邮箱有了账号后创建远程仓库 比如我创建的仓库名字为project 密钥本地创建密钥命令如下ssh-keygen -t rsa -C “邮箱地址”公钥存放在用户主目录 ~/.ssh/id_rsa.pub复制到官">
+<meta property="og:description" content="git作为目前最流行的版本管理工具还是必要学习一下的，本文讲述了如何使用远程。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-01T20:23:31.837Z">
+<meta property="og:updated_time" content="2017-09-02T18:38:36.410Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git远程仓库关联">
-<meta name="twitter:description" content="引言我的环境：ubantu17.04 其他linux发行版本安装使用大同小异安装git：sudo apt-get install git首先必须有一个githup账号 去官网注册即可 同时绑定邮箱有了账号后创建远程仓库 比如我创建的仓库名字为project 密钥本地创建密钥命令如下ssh-keygen -t rsa -C “邮箱地址”公钥存放在用户主目录 ~/.ssh/id_rsa.pub复制到官">
+<meta name="twitter:description" content="git作为目前最流行的版本管理工具还是必要学习一下的，本文讲述了如何使用远程。">
 
 
 
@@ -437,6 +437,10 @@
           
 
           
+              <div class="post-description">
+                  git作为目前最流行的版本管理工具还是必要学习一下的，本文讲述了如何使用远程。
+              </div>
+          
 
         </div>
       </header>
@@ -451,7 +455,8 @@
       
 
       
-        <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>我的环境：ubantu17.04 其他linux发行版本安装使用大同小异<br>安装git：sudo apt-get install git<br>首先必须有一个githup账号 去官网注册即可 同时绑定邮箱<br>有了账号后创建远程仓库 比如我创建的仓库名字为project</p>
+        <a id="more"></a>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>我的环境：ubantu17.04 其他linux发行版本安装使用大同小异<br>安装git：sudo apt-get install git<br>首先必须有一个githup账号 去官网注册即可 同时绑定邮箱<br>有了账号后创建远程仓库 比如我创建的仓库名字为project</p>
 <h2 id="密钥"><a href="#密钥" class="headerlink" title="密钥"></a>密钥</h2><p>本地创建密钥命令如下<br>ssh-keygen -t rsa -C “邮箱地址”<br>公钥存放在用户主目录 ~/.ssh/id_rsa.pub<br>复制到官网在账户设置一栏添加即可</p>
 <h2 id="验证连接"><a href="#验证连接" class="headerlink" title="验证连接"></a>验证连接</h2><p>验证是否能连接上<br>ssh -T git@github.com<br>输入yes后出现类似以下内容表示已经可以连接<br>Hi he475943497! You’ve successfully authenticated, but GitHub does not provide shell access.</p>
 <h2 id="创建本地仓库"><a href="#创建本地仓库" class="headerlink" title="创建本地仓库"></a>创建本地仓库</h2><p>执行下列命令<br>创建仓库并初始化<br>mkdir project<br>cd project<br>git init</p>
@@ -679,7 +684,7 @@ var jiathis_config={
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -690,7 +695,7 @@ var jiathis_config={
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -749,14 +754,6 @@ var jiathis_config={
                 </li>
               
                 <li class="links-of-blogroll-item">
-                  <a href="http://www.youku.com" title="优酷" target="_blank">优酷</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://www.tmall.com" title="天猫" target="_blank">天猫</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
                   <a href="http://www.douban.com" title="豆瓣" target="_blank">豆瓣</a>
                 </li>
               
@@ -765,15 +762,23 @@ var jiathis_config={
                 </li>
               
                 <li class="links-of-blogroll-item">
-                  <a href="http://www.v.qq.com/cartoon/" title="腾讯动漫" target="_blank">腾讯动漫</a>
+                  <a href="https://www.cnblogs.com/" title="博客园" target="_blank">博客园</a>
                 </li>
               
                 <li class="links-of-blogroll-item">
-                  <a href="http://www.jd.com" title="京东商场" target="_blank">京东商场</a>
+                  <a href="http://bbs.51cto.com/" title="51cto" target="_blank">51cto</a>
                 </li>
               
                 <li class="links-of-blogroll-item">
                   <a href="http://www.csdn.net" title="CSDN" target="_blank">CSDN</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://hexo.io" title="Hexo" target="_blank">Hexo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.v.qq.com/cartoon/" title="腾讯动漫" target="_blank">腾讯动漫</a>
                 </li>
               
             </ul>
