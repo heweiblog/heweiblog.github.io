@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Microsoft YaHei:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="DNS,bind," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="DNS服务在日常生活每天都会用到，是一项非常基础的网络服务，本文主要介绍如何使用开源dns服务软件bind。">
+<meta name="keywords" content="DNS,bind">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bind-9.11.2源码安装配置">
+<meta property="og:url" content="http://heweiblog.top/2017/09/07/bind-9-11-2源码安装配置/index.html">
+<meta property="og:site_name" content="走在启程的路上">
+<meta property="og:description" content="DNS服务在日常生活每天都会用到，是一项非常基础的网络服务，本文主要介绍如何使用开源dns服务软件bind。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-09-08T21:42:09.680Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="bind-9.11.2源码安装配置">
+<meta name="twitter:description" content="DNS服务在日常生活每天都会用到，是一项非常基础的网络服务，本文主要介绍如何使用开源dns服务软件bind。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://heweiblog.top/2017/09/07/bind-9-11-2源码安装配置/"/>
+
+
+
+
+
+  <title>bind-9.11.2源码安装配置 | 走在启程的路上</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">走在启程的路上</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">前进</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://heweiblog.top/2017/09/07/bind-9-11-2源码安装配置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="贺伟伟">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/mouse.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="走在启程的路上">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">bind-9.11.2源码安装配置</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-07T16:16:57+08:00">
+                2017-09-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/bind/" itemprop="url" rel="index">
+                    <span itemprop="name">bind</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/09/07/bind-9-11-2源码安装配置/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/09/07/bind-9-11-2源码安装配置/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  DNS服务在日常生活每天都会用到，是一项非常基础的网络服务，本文主要介绍如何使用开源dns服务软件bind。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <a id="more"></a>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>资源<br>apt yum 均可 安装bind 但这里不做介绍，本文主要介源码安装<br><a href="https://ftp.isc.org/isc/bind9/" target="_blank" rel="external">源码下载地址</a>选择比较稳定的版本进行下载<br>本文用的是最新版本bind-9.11.2</p>
+<p>解压<br>tar -zxvf bind-9.11.2.tar.gz</p>
+<p>配置<br>./configure –prefix=/usr/local/bind9 –enable-threads –enable-static –enable-ipv6=yes</p>
+<p>安装<br>make &amp;&amp; make install</p>
+<p>安装结束之后 建立目录结构<br>cd /usr/local/bind9/<br>mkdir var/named<br>mkdir /usr/local/bind9/var/logs<br>touch var/run/named.pid<br>touch var/named_dump.db<br>touch var/run/named.stats</p>
+<p>获取最新的根配置<br>cd var/named<br>wget ftp://ftp.rs.internic.net/domain/named.root<br>mv named.root named.ca</p>
+<h2 id="配置主配置文件"><a href="#配置主配置文件" class="headerlink" title="配置主配置文件"></a>配置主配置文件</h2><p>cd /usr/local/bind9/etc/</p>
+<p>具体配置参考<a href="https://wenku.baidu.com/view/1dad0af604a1b0717fd5dd4f.html" target="_blank" rel="external">百度文库</a></p>
+<h3 id="named-conf"><a href="#named-conf" class="headerlink" title="named.conf"></a>named.conf</h3><p> options { </p>
+<pre><code>directory &quot;/usr/local/bind9/var/named&quot;; 
+
+pid-file  &quot;/usr/local/bind9/var/run/named.pid&quot;; 
+
+dump-file &quot;/usr/local/bind9/var/named_dump.db&quot;; 
+
+statistics-file &quot;/usr/local/bind9/var/run/named.stats&quot;; 
+</code></pre><p>};</p>
+<p>// Log </p>
+<p>logging { </p>
+<pre><code>channel error_log {
+
+        file &quot;/usr/local/bind9/var/logs/error.log&quot; versions 10 size 32m;
+
+        severity warning;
+
+        print-time yes;
+
+        print-severity yes;
+
+        print-category yes;
+
+}; 
+
+channel query_log {
+
+        file &quot;/usr/local/bind9/var/logs/query.log&quot; versions 10 size 32m;
+
+        severity info;
+
+        print-time yes;
+
+        print-severity yes;
+
+        print-category yes;
+
+}; 
+
+category default { error_log; }; 
+
+category queries { query_log; }; 
+</code></pre><p>};</p>
+<p>// RNDC </p>
+<p>key “rndc-key” {<br>      algorithm hmac-md5;<br>      secret “D1rQg6l6lLExdxGMlJOEuA==”;<br>};</p>
+<p>controls {<br>      inet 127.0.0.1 port 953<br>              allow { 127.0.0.1; } keys { “rndc-key”; };<br>};</p>
+<p>// Cacheing Only Name Server Config </p>
+<p>zone “.” IN { </p>
+<pre><code>type hint; 
+
+file &quot;named.ca&quot;; 
+</code></pre><p>};</p>
+<p>// localhost. </p>
+<p>zone “localhost” IN { </p>
+<pre><code>type master; 
+
+file &quot;localhost.zone&quot;; 
+
+allow-update { none; }; 
+</code></pre><p>};</p>
+<p>zone “0.0.127.in-addr.arpa” IN { </p>
+<pre><code>type master; 
+
+file &quot;localhost.rzone&quot;; 
+
+allow-update { none; }; 
+</code></pre><p>};</p>
+<p>// abc.com. </p>
+<p>zone “abc.com” IN { </p>
+<pre><code>type master; 
+
+file &quot;abc.com.zone&quot;; 
+
+allow-update { none; }; 
+</code></pre><p>};</p>
+<p>zone “0.0.10.in-addr.arpa” IN {<br>        type master; </p>
+<pre><code>file &quot;abc.com.rzone&quot;; 
+
+allow-update { none; }; 
+</code></pre><p>};</p>
+<h3 id="named-ca"><a href="#named-ca" class="headerlink" title="named.ca"></a>named.ca</h3><p>;       This file holds the information on root name servers needed to<br>;       initialize cache of Internet domain name servers<br>;       (e.g. reference this file in the “cache  .  <file>“<br>;       configuration file of BIND domain name servers).<br>;<br>;       This file is made available by InterNIC<br>;       under anonymous FTP as<br>;           file                /domain/named.cache<br>;           on server           FTP.INTERNIC.NET<br>;       -OR-                    RS.INTERNIC.NET<br>;<br>;       last update:     August 29, 2017<br>;       related version of root zone:     2017082901<br>;<br>; FORMERLY NS.INTERNIC.NET<br>;<br>.                        3600000      NS    A.ROOT-SERVERS.NET.<br>A.ROOT-SERVERS.NET.      3600000      A     198.41.0.4<br>A.ROOT-SERVERS.NET.      3600000      AAAA  2001:503:ba3e::2:30<br>;<br>; FORMERLY NS1.ISI.EDU<br>;<br>.                        3600000      NS    B.ROOT-SERVERS.NET.<br>B.ROOT-SERVERS.NET.      3600000      A     192.228.79.201<br>B.ROOT-SERVERS.NET.      3600000      AAAA  2001:500:200::b<br>;<br>; FORMERLY C.PSI.NET<br>;<br>.                        3600000      NS    C.ROOT-SERVERS.NET.<br>C.ROOT-SERVERS.NET.      3600000      A     192.33.4.12<br>C.ROOT-SERVERS.NET.      3600000      AAAA  2001:500:2::c<br>;<br>; FORMERLY TERP.UMD.EDU<br>;<br>.                        3600000      NS    D.ROOT-SERVERS.NET.<br>D.ROOT-SERVERS.NET.      3600000      A     199.7.91.13<br>D.ROOT-SERVERS.NET.      3600000      AAAA  2001:500:2d::d<br>;<br>; FORMERLY NS.NASA.GOV<br>;<br>.                        3600000      NS    E.ROOT-SERVERS.NET.<br>E.ROOT-SERVERS.NET.      3600000      A     192.203.230.10<br>E.ROOT-SERVERS.NET.      3600000      AAAA  2001:500:a8::e<br>;<br>; FORMERLY NS.ISC.ORG<br>;<br>.                        3600000      NS    F.ROOT-SERVERS.NET.<br>F.ROOT-SERVERS.NET.      3600000      A     192.5.5.241<br>F.ROOT-SERVERS.NET.      3600000      AAAA  2001:500:2f::f<br>;<br>; FORMERLY NS.NIC.DDN.MIL<br>;<br>.                        3600000      NS    G.ROOT-SERVERS.NET.<br>G.ROOT-SERVERS.NET.      3600000      A     192.112.36.4<br>G.ROOT-SERVERS.NET.      3600000      AAAA  2001:500:12::d0d<br>;<br>; FORMERLY AOS.ARL.ARMY.MIL<br>;<br>.                        3600000      NS    H.ROOT-SERVERS.NET.<br>H.ROOT-SERVERS.NET.      3600000      A     198.97.190.53<br>H.ROOT-SERVERS.NET.      3600000      AAAA  2001:500:1::53<br>;<br>; FORMERLY NIC.NORDU.NET<br>;<br>.                        3600000      NS    I.ROOT-SERVERS.NET.<br>I.ROOT-SERVERS.NET.      3600000      A     192.36.148.17<br>I.ROOT-SERVERS.NET.      3600000      AAAA  2001:7fe::53<br>;<br>; OPERATED BY VERISIGN, INC.<br>;<br>.                        3600000      NS    J.ROOT-SERVERS.NET.<br>J.ROOT-SERVERS.NET.      3600000      A     192.58.128.30<br>J.ROOT-SERVERS.NET.      3600000      AAAA  2001:503:c27::2:30<br>;<br>; OPERATED BY RIPE NCC<br>;<br>.                        3600000      NS    K.ROOT-SERVERS.NET.<br>K.ROOT-SERVERS.NET.      3600000      A     193.0.14.129<br>K.ROOT-SERVERS.NET.      3600000      AAAA  2001:7fd::1<br>;<br>; OPERATED BY ICANN<br>;<br>.                        3600000      NS    L.ROOT-SERVERS.NET.<br>L.ROOT-SERVERS.NET.      3600000      A     199.7.83.42<br>L.ROOT-SERVERS.NET.      3600000      AAAA  2001:500:9f::42<br>;<br>; OPERATED BY WIDE<br>;<br>.                        3600000      NS    M.ROOT-SERVERS.NET.<br>M.ROOT-SERVERS.NET.      3600000      A     202.12.27.33<br>M.ROOT-SERVERS.NET.      3600000      AAAA  2001:dc3::35<br>; End of file</file></p>
+<h3 id="localhost-zone"><a href="#localhost-zone" class="headerlink" title="localhost.zone"></a>localhost.zone</h3><p>$TTL 86400 </p>
+<p>$ORIGIN localhost. </p>
+<p>@   IN  SOA localhost. root.localhost. ( </p>
+<pre><code>2006083100       Serial (YYMMDDSN) 
+
+1800             Refresh 
+
+300              Retry 
+
+3600             Expiry 
+
+300 )            Minimum 
+</code></pre><p>@   IN  NS  localhost. </p>
+<p>@   IN  A   127.0.0.1 </p>
+<h3 id="localhost-rzone"><a href="#localhost-rzone" class="headerlink" title="localhost.rzone"></a>localhost.rzone</h3><p> $TTL 86400 </p>
+<p>@   IN  SOA localhost. root.localhost.  ( </p>
+<pre><code>2006083100   Serial (YYMMDDSN) 
+
+30M          Refresh 
+
+5M           Retry 
+
+1H           Expire 
+
+5M )         Minimum 
+</code></pre><p>@   IN  NS  localhost. </p>
+<p>1   IN  PTR localhost</p>
+<h3 id="abc-com-zone"><a href="#abc-com-zone" class="headerlink" title="abc.com.zone"></a>abc.com.zone</h3><p>$TTL 600</p>
+<p>$ORIGIN abc.net.</p>
+<p>@   IN  SOA abc.net. webmaster.abc.com. (</p>
+<pre><code>2006083100       Serial (YYMMDDSN)
+
+
+
+1800             Refresh
+
+
+
+300              Retry
+
+
+
+3600             Expiry
+
+
+
+300 )            Minimum
+</code></pre><p>@   IN  NS  ns1.abc.com.</p>
+<p>@   IN  A   10.0.0.97</p>
+<p>ns1 IN  A   10.0.0.97</p>
+<p>www IN  A   10.0.0.97</p>
+<p>web IN  CNAME   www</p>
+<p>mail IN MX 10.0.0.97</p>
+<h3 id="abc-com-rzone"><a href="#abc-com-rzone" class="headerlink" title="abc.com.rzone"></a>abc.com.rzone</h3><p>$TTL 86400 </p>
+<p>@   IN  SOA localhost. root.localhost.  ( </p>
+<pre><code>2006083100   Serial (YYMMDDSN) 
+
+30M          Refresh 
+
+5M           Retry 
+
+1H           Expire 
+
+5M )         Minimum 
+</code></pre><p>@   IN  NS  localhost. </p>
+<p>1   IN  PTR localhost</p>
+<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><p>/usr/local/bind9/sbin/named -gc /usr/local/bind9/etc/named.conf<br>带日志启动<br>不带日志去掉 -g 参数</p>
+<h2 id="启动脚本"><a href="#启动脚本" class="headerlink" title="启动脚本"></a>启动脚本</h2><p>vim /etc/rc.d/init.d/named<br>if [ <code>id -u</code> -ne 0 ]<br>then<br>echo “ERROR:For bind to port 53,must run as root.”<br>exit 1<br>fi<br>case “$1” in</p>
+<p>start)<br>if [ -x /usr/local/bind9/sbin/named ]; then<br>/usr/local/bind9/sbin/named -c /usr/local/bind9/etc/named.conf &amp;&amp; echo ‘start named [ok]’<br>fi<br>;;</p>
+<p>stop)<br>kill <code>cat /usr/local/bind9/var/run/named.pid</code> &amp;&amp; echo ‘stop named [ok]’<br>;;<br>restart)<br>echo “restart named”<br>$0 stop<br>$0 start<br>;;<br>*)<br>echo “$0 start | stop | restart”<br>;;</p>
+<p>esac</p>
+<h3 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h3><p>service named start<br>设置为开机启动<br>编辑文件 vim /etc/rc.d/rc.local 添加以下内容即可<br>/etc/rc.d/init.d/named start<br><a href="http://www.linuxidc.com/Linux/2012-09/71497.htm" target="_blank" rel="external">参考文章</a></p>
+<h3 id="更改首选服务器为自己"><a href="#更改首选服务器为自己" class="headerlink" title="更改首选服务器为自己"></a>更改首选服务器为自己</h3><p>vim /etc/resolv.conf<br>nameserver 127.0.0.1</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>至此一个滑溜溜的DNS 服务器就配置好了 这只是冰山一角</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/mouse.jpg" alt="贺伟伟 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>不断学习，不断成长，进步在于积累，一起分享知识！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>记录学习点滴，沉淀美好生活，支持原创！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wx.jpg" alt="贺伟伟 WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/zfb.jpg" alt="贺伟伟 Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    贺伟伟
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://heweiblog.top/2017/09/07/bind-9-11-2源码安装配置/" title="bind-9.11.2源码安装配置">http://heweiblog.top/2017/09/07/bind-9-11-2源码安装配置/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DNS/" rel="tag"># DNS</a>
+          
+            <a href="/tags/bind/" rel="tag"># bind</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/06/服务器性能测试/" rel="next" title="服务器性能测试">
+                <i class="fa fa-chevron-left"></i> 服务器性能测试
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微薄</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/images/mouse.jpg"
+              alt="贺伟伟" />
+          
+            <p class="site-author-name" itemprop="name">贺伟伟</p>
+            <p class="site-description motion-element" itemprop="description">一条咸鱼</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/heweiblog" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://mail.qq.com.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.baidu.com" title="百度" target="_blank">百度</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.weibo.com" title="微博" target="_blank">微博</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.douban.com" title="豆瓣" target="_blank">豆瓣</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhihu.com" title="知乎" target="_blank">知乎</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.cnblogs.com/" title="博客园" target="_blank">博客园</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://bbs.51cto.com/" title="51cto" target="_blank">51cto</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.csdn.net" title="CSDN" target="_blank">CSDN</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://hexo.io" title="Hexo" target="_blank">Hexo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://v.qq.com/cartoon/" title="腾讯动漫" target="_blank">腾讯动漫</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置主配置文件"><span class="nav-number">2.</span> <span class="nav-text">配置主配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#named-conf"><span class="nav-number">2.1.</span> <span class="nav-text">named.conf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#named-ca"><span class="nav-number">2.2.</span> <span class="nav-text">named.ca</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#localhost-zone"><span class="nav-number">2.3.</span> <span class="nav-text">localhost.zone</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#localhost-rzone"><span class="nav-number">2.4.</span> <span class="nav-text">localhost.rzone</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#abc-com-zone"><span class="nav-number">2.5.</span> <span class="nav-text">abc.com.zone</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#abc-com-rzone"><span class="nav-number">2.6.</span> <span class="nav-text">abc.com.rzone</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动"><span class="nav-number">3.</span> <span class="nav-text">启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动脚本"><span class="nav-number">4.</span> <span class="nav-text">启动脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#启动服务"><span class="nav-number">4.1.</span> <span class="nav-text">启动服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更改首选服务器为自己"><span class="nav-number">4.2.</span> <span class="nav-text">更改首选服务器为自己</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017.9 &mdash; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">贺伟伟</span>
+
+  
+</div>
+
+
+  <div class="powered-by">  个人专属</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">博客 &mdash;  v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://heweiblog.top/2017/09/07/bind-9-11-2源码安装配置/';
+          this.page.identifier = '2017/09/07/bind-9-11-2源码安装配置/';
+          this.page.title = 'bind-9.11.2源码安装配置';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.2"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
