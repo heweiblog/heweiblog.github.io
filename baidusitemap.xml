@@ -4,6 +4,118 @@
 
     
   <url>
+    <loc>http://heweiblog.top/2017/09/11/%E5%AE%89%E8%A3%85python3-5/</loc>
+    <lastmod>2017-09-15T23:08:49.631Z</lastmod>
+    <data>
+        <display>
+        <title>安装python3.5</title>
+        <pubTime>2017-09-11T01:49:47.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>python3</tag>
+         
+         
+           
+             
+              <breadCrumb title="python" url="http://heweiblog.top/categories/python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://heweiblog.top/2017/09/11/rpm%E5%8C%85%E5%88%B6%E4%BD%9C/</loc>
+    <lastmod>2017-09-15T23:08:49.631Z</lastmod>
+    <data>
+        <display>
+        <title>rpm包制作</title>
+        <pubTime>2017-09-11T01:42:59.000Z</pubTime>
+        
+        <tag>rpm</tag>
+         
+        <tag>打包</tag>
+         
+         
+           
+             
+              <breadCrumb title="linux基础" url="http://heweiblog.top/categories/linux%E5%9F%BA%E7%A1%80/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://heweiblog.top/2017/09/12/linux%E5%8E%8B%E7%BC%A9%E5%91%BD%E4%BB%A4/</loc>
+    <lastmod>2017-09-15T23:08:49.631Z</lastmod>
+    <data>
+        <display>
+        <title>linux压缩命令</title>
+        <pubTime>2017-09-12T01:41:44.000Z</pubTime>
+        
+        <tag>压缩</tag>
+         
+        <tag>tar</tag>
+         
+        <tag>gzip</tag>
+         
+         
+           
+             
+              <breadCrumb title="linux命令" url="http://heweiblog.top/categories/linux%E5%91%BD%E4%BB%A4/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://heweiblog.top/2017/09/11/cetos6-8mysql%E5%AE%89%E8%A3%85/</loc>
+    <lastmod>2017-09-15T23:08:49.627Z</lastmod>
+    <data>
+        <display>
+        <title>cetos6.8mysql安装</title>
+        <pubTime>2017-09-11T02:20:47.000Z</pubTime>
+        
+        <tag>mysql</tag>
+         
+         
+           
+             
+              <breadCrumb title="mysql" url="http://heweiblog.top/categories/mysql/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://heweiblog.top/2017/09/14/linux%E5%86%85%E6%A0%B8%E4%B9%8Blist-h/</loc>
+    <lastmod>2017-09-15T23:08:49.627Z</lastmod>
+    <data>
+        <display>
+        <title>linux内核之list.h</title>
+        <pubTime>2017-09-14T11:28:08.000Z</pubTime>
+        
+        <tag>list</tag>
+         
+        <tag>linux基础</tag>
+         
+        <tag>链表基础操作</tag>
+         
+         
+           
+             
+              <breadCrumb title="linux基础" url="http://heweiblog.top/categories/linux%E5%9F%BA%E7%A1%80/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://heweiblog.top/2017/09/07/bind-9-11-2%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/</loc>
     <lastmod>2017-09-08T21:42:09.680Z</lastmod>
     <data>
