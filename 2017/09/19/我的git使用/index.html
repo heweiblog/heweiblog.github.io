@@ -119,18 +119,18 @@
 
 
 
-<meta name="description" content="引言安装gityum apt 均可 Git add将当前工作目录中更改或者新增的文件加入到Git的索引中，加入到Git的索引中就表示记入了版本历史中，这也是提交之前所需要执行的一步。可以递归添加，即如果后面跟的是一个目录作为参数，则会递归添加整个目录中的所有子目录和文件。例如：       git add dir1 （ 添加dir1这个目录，目录下的所有文件都被加入 ）       Git ad">
+<meta name="description" content="作为一个好的linux下码农git是必备工具，">
 <meta name="keywords" content="git">
 <meta property="og:type" content="article">
 <meta property="og:title" content="我的git使用">
 <meta property="og:url" content="http://heweiblog.top/2017/09/19/我的git使用/index.html">
 <meta property="og:site_name" content="走在启程的路上">
-<meta property="og:description" content="引言安装gityum apt 均可 Git add将当前工作目录中更改或者新增的文件加入到Git的索引中，加入到Git的索引中就表示记入了版本历史中，这也是提交之前所需要执行的一步。可以递归添加，即如果后面跟的是一个目录作为参数，则会递归添加整个目录中的所有子目录和文件。例如：       git add dir1 （ 添加dir1这个目录，目录下的所有文件都被加入 ）       Git ad">
+<meta property="og:description" content="作为一个好的linux下码农git是必备工具，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-22T22:30:55.857Z">
+<meta property="og:updated_time" content="2017-09-22T23:50:33.397Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="我的git使用">
-<meta name="twitter:description" content="引言安装gityum apt 均可 Git add将当前工作目录中更改或者新增的文件加入到Git的索引中，加入到Git的索引中就表示记入了版本历史中，这也是提交之前所需要执行的一步。可以递归添加，即如果后面跟的是一个目录作为参数，则会递归添加整个目录中的所有子目录和文件。例如：       git add dir1 （ 添加dir1这个目录，目录下的所有文件都被加入 ）       Git ad">
+<meta name="twitter:description" content="作为一个好的linux下码农git是必备工具，">
 
 
 
@@ -437,6 +437,10 @@
           
 
           
+              <div class="post-description">
+                  作为一个好的linux下码农git是必备工具，
+              </div>
+          
 
         </div>
       </header>
@@ -489,7 +493,7 @@
 <h2 id="查看状态"><a href="#查看状态" class="headerlink" title="查看状态"></a>查看状态</h2><p>[heweiwei@heweiwei yprobe-c]$ git status<br>On branch enterprise</p>
 <h2 id="接收数据"><a href="#接收数据" class="headerlink" title="接收数据"></a>接收数据</h2><p>[heweiwei@heweiwei yprobe-c]$ git pull<br>remote: Counting objects: 7, done.<br>remote: Compressing objects: 100% (3/3), done.<br>remote: Total 4 (delta 2), reused 0 (delta 0)<br>Unpacking objects: 100% (4/4), done.<br>From 192.168.8.253:yprobe-c<br>   ccf10bf..9b609d8  enterprise -&gt; origin/enterprise<br>Updating ccf10bf..9b609d8<br>Fast-forward<br> dial_cpp/Dial_server.cpp |   88 ++++++++++++++++++++++++++++++++++++++++++++-<br> 1 files changed, 86 insertions(+), 2 deletions(-)</p>
 <h2 id="保存现场"><a href="#保存现场" class="headerlink" title="保存现场"></a>保存现场</h2><p>git stash     修改了东西  暂存起来</p>
-<h2 id="我的提交："><a href="#我的提交：" class="headerlink" title="我的提交："></a>我的提交：</h2><p>[heweiwei@heweiwei dial]$ git add Dial_epoll.cpp<br>[heweiwei@heweiwei yprobe-c]$ git commit -m “repeat assignment”<br>[heweiwei@heweiwei yprobe-c]$ git push<br>[heweiwei@heweiwei yprobe-c]$ git log<br>commit 13fb4c131309358ce0099295f3a34a3e0a873f6e<br>Author: heweiwei <a href="&#109;&#97;&#x69;&#x6c;&#x74;&#111;&#x3a;&#104;&#x65;&#119;&#x65;&#x69;&#x77;&#101;&#x69;&#64;&#x68;&#x65;&#x77;&#101;&#x69;&#x77;&#101;&#105;&#46;&#40;&#110;&#x6f;&#110;&#x65;&#41;">&#104;&#x65;&#119;&#x65;&#x69;&#x77;&#101;&#x69;&#64;&#x68;&#x65;&#x77;&#101;&#x69;&#x77;&#101;&#105;&#46;&#40;&#110;&#x6f;&#110;&#x65;&#41;</a><br>Date:   Wed Mar 29 10:41:12 2017 +0800</p>
+<h2 id="我的提交："><a href="#我的提交：" class="headerlink" title="我的提交："></a>我的提交：</h2><p>[heweiwei@heweiwei dial]$ git add Dial_epoll.cpp<br>[heweiwei@heweiwei yprobe-c]$ git commit -m “repeat assignment”<br>[heweiwei@heweiwei yprobe-c]$ git push<br>[heweiwei@heweiwei yprobe-c]$ git log<br>commit 13fb4c131309358ce0099295f3a34a3e0a873f6e<br>Author: heweiwei <a href="&#x6d;&#97;&#x69;&#108;&#116;&#111;&#58;&#104;&#101;&#119;&#101;&#x69;&#x77;&#x65;&#105;&#x40;&#x68;&#101;&#x77;&#x65;&#105;&#x77;&#x65;&#105;&#46;&#40;&#x6e;&#x6f;&#110;&#x65;&#41;">&#104;&#101;&#119;&#101;&#x69;&#x77;&#x65;&#105;&#x40;&#x68;&#101;&#x77;&#x65;&#105;&#x77;&#x65;&#105;&#46;&#40;&#x6e;&#x6f;&#110;&#x65;&#41;</a><br>Date:   Wed Mar 29 10:41:12 2017 +0800</p>
 <p>repeat assignment</p>
 <h2 id="创建分支并切换到该分支"><a href="#创建分支并切换到该分支" class="headerlink" title="创建分支并切换到该分支"></a>创建分支并切换到该分支</h2><p>[heweiwei@heweiwei yprobe-c]$ git checkout -b heweiwei_dial<br>此命令相当于 git branch heweiwei_dial     git checkout heweiwei_dial</p>
 <h2 id="把本地分支推送到远程分支"><a href="#把本地分支推送到远程分支" class="headerlink" title="把本地分支推送到远程分支"></a>把本地分支推送到远程分支</h2><p>[heweiwei@heweiwei yprobe-c]$ git push origin heweiwei_dial</p>

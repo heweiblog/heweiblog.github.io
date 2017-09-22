@@ -778,65 +778,14 @@
 
       
         
-          
-            <a id="more"></a>
-<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><h2 id="安装git"><a href="#安装git" class="headerlink" title="安装git"></a>安装git</h2><p>yum apt 均可</p>
-<h2 id="Git-add"><a href="#Git-add" class="headerlink" title="Git add"></a>Git add</h2><p>将当前工作目录中更改或者新增的文件加入到Git的索引中，加入到Git的索引中就表示记入了版本历史中，<br>这也是提交之前所需要执行的一步。<br>可以递归添加，即如果后面跟的是一个目录作为参数，则会递归添加整个目录中的所有子目录和文件。例如：<br>       git add dir1 （ 添加dir1这个目录，目录下的所有文件都被加入 ）<br>       Git add f1 f2 （ 添加f1，f2文件）<br>       git add .      ( 添加当前目录下的所有文件和子目录 ) </p>
-<h2 id="Git-commit"><a href="#Git-commit" class="headerlink" title="Git commit"></a>Git commit</h2><p>提交当前工作目录的修改内容。<br>直接调用git commit命令，会提示填写注释。通过如下方式在命令行就填写提交注释：<br>git commit -m “Initial commit of gittutor reposistory”。 注意，和CVS不同，git的提交注释必须不能为空，否则就会提交失败。<br>git commit还有一个 -a的参数，可以将那些没有通过git add标识的变化一并强行提交，但是不建议使用这种方式。<br>每一次提交，git就会为全局代码建立一个唯一的commit标识代码，用户可以通过git reset命令恢复到任意一次提交时的代码。<br>git commit –-amend –m “message” （在一个commit id上不断修改提交的内容） </p>
-<h2 id="Git-status"><a href="#Git-status" class="headerlink" title="Git status"></a>Git status</h2><p>查看版本库的状态。可以得知哪些文件发生了变化，哪些文件还没有添加到git库中等等。<br>建议每次commit前都要通过该命令确认库状态。<br>最常见的误操作是， 修改了一个文件， 没有调用git add通知git库该文件已经发生了变化就直接调用commit操作，<br>从而导致该文件并没有真正的提交。这时如果开发者以为已经提交了该文件，就继续修改甚至删除这个文件，<br>那么修改的内容就没有通过版本管理起来。如果每次在 提交前，使用git status查看一下，就可以发现这种错误。<br>因此，如果调用了git status命令，一定要格外注意那些提示为 “Changed but not updated:”的文件。<br>这些文件都是与上次commit相比发生了变化，但是却没有通过git add标识的文件。</p>
-<h2 id="初始化一个Git仓库，使用git-init命令。"><a href="#初始化一个Git仓库，使用git-init命令。" class="headerlink" title="初始化一个Git仓库，使用git init命令。"></a>初始化一个Git仓库，使用git init命令。</h2><p>添加文件到Git仓库，分两步：<br>第一步，使用命令git add <file>，注意，可反复多次使用，添加多个文件；<br>第二步，使用命令git commit，完成。</file></p>
-<p>要随时掌握工作区的状态，使用git status命令。<br>如果git status告诉你有文件被修改过，用git diff可以查看修改内容</p>
-<h2 id="Git必须知道当前版本是哪个版本，"><a href="#Git必须知道当前版本是哪个版本，" class="headerlink" title="Git必须知道当前版本是哪个版本，"></a>Git必须知道当前版本是哪个版本，</h2><p>在Git中，用HEAD表示当前版本，<br>也就是最新的提交3628164…882e1e0（注意我的提交ID和你的肯定不一样），<br>上一个版本就是HEAD^，上上一个版本就是HEAD^^，当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100。<br>git reset –hard HEAD^</p>
-<p>Git的版本回退速度非常快，因为Git在内部有个指向当前版本的HEAD指针，当你回退版本的时候，Git仅仅是把HEAD从指向append GPL<br>HEAD指向的版本就是当前版本，因此，Git允许我们在版本的历史之间穿梭，使用命令git reset –hard commit_id。<br>穿梭前，用git log可以查看提交历史，以便确定要回退到哪个版本。<br>要重返未来，用git reflog查看命令历史，以便确定要回到未来的哪个版本。</p>
-<p>git add命令实际上就是把要提交的所有修改放到暂存区（Stage），<br>然后，执行git commit就可以一次性把暂存区的所有修改提交到分支。git commit只负责把暂存区的修改提交了</p>
-<p>git checkout – file可以丢弃工作区的修改：<br>命令git checkout – readme.txt意思就是，把readme.txt文件在工作区的修改全部撤销，这里有两种情况：<br>一种是readme.txt自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；<br>一种是readme.txt已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。<br>总之，就是让这个文件回到最近一次git commit或git add时的状态。</p>
-<p>Git同样告诉我们，用命令git reset HEAD file可以把暂存区的修改撤销掉（unstage），重新放回工作区：<br>场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout – file。<br>场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，<br>分两步，第一步用命令git reset HEAD file，就回到了场景1，第二步按场景1操作。</p>
-<p>一般情况下，你通常直接在文件管理器中把没用的文件删了，或者用rm命令删了：<br>$ rm test.txt<br>这个时候，Git知道你删除了文件，因此，工作区和版本库就不一致了，git status命令会立刻告诉你哪些文件被删除了：<br>现在你有两个选择，一是确实要从版本库中删除该文件，那就用命令git rm删掉，并且git commit<br>现在，文件就从版本库中被删除了。<br>另一种情况是删错了，因为版本库里还有呢，所以可以很轻松地把误删的文件恢复到最新版本：<br>$ git checkout – test.txt<br>git checkout其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以“一键还原”。</p>
-<h2 id="关联"><a href="#关联" class="headerlink" title="关联"></a>关联</h2><p>要关联一个远程库，使用命令git remote add origin git@server-name:path/repo-name.git；<br>关联后，使用命令git push -u origin master第一次推送master分支的所有内容；<br>此后，每次本地提交后，只要有必要，就可以使用命令git push origin master推送最新修改</p>
-<h2 id="克隆"><a href="#克隆" class="headerlink" title="克隆"></a>克隆</h2><p>要克隆一个仓库，首先必须知道仓库的地址，然后使用git clone命令克隆。<br>git clone git@github.com:michaelliao/gitskills.git<br>Git支持多种协议，包括https，但通过ssh支持的原生git协议速度最快。</p>
-<h2 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h2><p>查看分支：git branch<br>创建分支：git branch <name><br>切换分支：git checkout <name><br>创建+切换分支：git checkout -b <name><br>合并某分支到当前分支：git merge <name><br>删除分支：git branch -d <name></name></name></name></name></name></p>
-<h2 id="冲突-合并"><a href="#冲突-合并" class="headerlink" title="冲突 合并"></a>冲突 合并</h2><p>当Git无法自动合并分支时，就必须首先解决冲突。解决冲突后，再提交，合并完成。<br>用git log –graph命令可以看到分支合并图。</p>
-<p>Git分支十分强大，在团队开发中应该充分应用。<br>合并分支时，加上–no-ff参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，<br>而fast forward合并就看不出来曾经做过合并。</p>
-<h2 id="git-stash"><a href="#git-stash" class="headerlink" title="git stash"></a>git stash</h2><p>修复bug时，我们会通过创建新的bug分支进行修复，然后合并，最后删除；<br>当手头工作没有完成时，先把工作现场git stash一下，然后去修复bug，修复后，再git stash pop，回到工作现场。</p>
-<h2 id="开发一个新feature，最好新建一个分支；"><a href="#开发一个新feature，最好新建一个分支；" class="headerlink" title="开发一个新feature，最好新建一个分支；"></a>开发一个新feature，最好新建一个分支；</h2><p>如果要丢弃一个没有被合并过的分支，可以通过git branch -D <name>强行删除。</name></p>
-<h2 id="查看远程库信息，使用git-remote-v；"><a href="#查看远程库信息，使用git-remote-v；" class="headerlink" title="查看远程库信息，使用git remote -v；"></a>查看远程库信息，使用git remote -v；</h2><p>本地新建的分支如果不推送到远程，对其他人就是不可见<br>从本地推送分支，使用git push origin branch-name，如果推送失败，先用git pull抓取远程的新提交；<br>在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，本地和远程分支的名称最好一致；<br>建立本地分支和远程分支的关联，使用git branch –set-upstream branch-name origin/branch-name；<br>从远程抓取分支，使用git pull，如果有冲突，要先处理冲突。</p>
-<h1 id="我的git使用"><a href="#我的git使用" class="headerlink" title="我的git使用"></a>我的git使用</h1><p>git client端需要在～/.ssh/config文件中添加如下信息：<br>host 192.168.8.253<br>port 61112</p>
-<p>自己新建一个目录在该目录下<br>git clone git@192.168.8.253:yprobe-c.git</p>
-<p>切到目标目录下<br>[heweiwei@heweiwei work]$ ls<br>yprobe-c<br>[heweiwei@heweiwei work]$ cd yprobe-c/</p>
-<h2 id="查看处于那个分支"><a href="#查看处于那个分支" class="headerlink" title="查看处于那个分支"></a>查看处于那个分支</h2><p>[heweiwei@heweiwei yprobe-c]$ git branch</p>
-<ul>
-<li>master<br>remotes/origin/HEAD -&gt; origin/master<br>remotes/origin/enterprise<br>remotes/origin/master</li>
-</ul>
-<p>[heweiwei@heweiwei yprobe-c]$ </p>
-<h2 id="切换分支"><a href="#切换分支" class="headerlink" title="切换分支"></a>切换分支</h2><p>[heweiwei@heweiwei yprobe-c]$ git checkout enterprise    /<br>Branch enterprise set up to track remote branch enterprise from origin.</p>
-<p>Switched to a new branch ‘enterprise’<br>[heweiwei@heweiwei yprobe-c]$<br>[heweiwei@heweiwei yprobe-c]$ </p>
-<h2 id="查看远程所有分支"><a href="#查看远程所有分支" class="headerlink" title="查看远程所有分支"></a>查看远程所有分支</h2><p>[heweiwei@heweiwei yprobe-c]$ git branch -a </p>
-<ul>
-<li>enterprise<br>master</li>
-</ul>
-<h2 id="查看状态"><a href="#查看状态" class="headerlink" title="查看状态"></a>查看状态</h2><p>[heweiwei@heweiwei yprobe-c]$ git status<br>On branch enterprise</p>
-<h2 id="接收数据"><a href="#接收数据" class="headerlink" title="接收数据"></a>接收数据</h2><p>[heweiwei@heweiwei yprobe-c]$ git pull<br>remote: Counting objects: 7, done.<br>remote: Compressing objects: 100% (3/3), done.<br>remote: Total 4 (delta 2), reused 0 (delta 0)<br>Unpacking objects: 100% (4/4), done.<br>From 192.168.8.253:yprobe-c<br>   ccf10bf..9b609d8  enterprise -&gt; origin/enterprise<br>Updating ccf10bf..9b609d8<br>Fast-forward<br> dial_cpp/Dial_server.cpp |   88 ++++++++++++++++++++++++++++++++++++++++++++-<br> 1 files changed, 86 insertions(+), 2 deletions(-)</p>
-<h2 id="保存现场"><a href="#保存现场" class="headerlink" title="保存现场"></a>保存现场</h2><p>git stash     修改了东西  暂存起来</p>
-<h2 id="我的提交："><a href="#我的提交：" class="headerlink" title="我的提交："></a>我的提交：</h2><p>[heweiwei@heweiwei dial]$ git add Dial_epoll.cpp<br>[heweiwei@heweiwei yprobe-c]$ git commit -m “repeat assignment”<br>[heweiwei@heweiwei yprobe-c]$ git push<br>[heweiwei@heweiwei yprobe-c]$ git log<br>commit 13fb4c131309358ce0099295f3a34a3e0a873f6e<br>Author: heweiwei <a href="&#109;&#97;&#x69;&#x6c;&#x74;&#111;&#x3a;&#104;&#x65;&#119;&#x65;&#x69;&#x77;&#101;&#x69;&#64;&#x68;&#x65;&#x77;&#101;&#x69;&#x77;&#101;&#105;&#46;&#40;&#110;&#x6f;&#110;&#x65;&#41;">&#104;&#x65;&#119;&#x65;&#x69;&#x77;&#101;&#x69;&#64;&#x68;&#x65;&#x77;&#101;&#x69;&#x77;&#101;&#105;&#46;&#40;&#110;&#x6f;&#110;&#x65;&#41;</a><br>Date:   Wed Mar 29 10:41:12 2017 +0800</p>
-<p>repeat assignment</p>
-<h2 id="创建分支并切换到该分支"><a href="#创建分支并切换到该分支" class="headerlink" title="创建分支并切换到该分支"></a>创建分支并切换到该分支</h2><p>[heweiwei@heweiwei yprobe-c]$ git checkout -b heweiwei_dial<br>此命令相当于 git branch heweiwei_dial     git checkout heweiwei_dial</p>
-<h2 id="把本地分支推送到远程分支"><a href="#把本地分支推送到远程分支" class="headerlink" title="把本地分支推送到远程分支"></a>把本地分支推送到远程分支</h2><p>[heweiwei@heweiwei yprobe-c]$ git push origin heweiwei_dial</p>
-<h2 id="删除远程分支"><a href="#删除远程分支" class="headerlink" title="删除远程分支"></a>删除远程分支</h2><p>git push origin :heweiwei_dial 注意origin后面的空格</p>
-<p>（只有合并之后）才可以用此命令删除本地分支（因为创建本地分支的目的就是为了开发合并）<br>[heweiwei@heweiwei yprobe-c]$ git branch -d heweiwei_dial<br>error: The branch ‘heweiwei_dial’ is not fully merged.<br>If you are sure you want to delete it, run ‘git branch -D heweiwei_dial’.</p>
-<h2 id="强制删除本地分支（没有合并的分支也删除）"><a href="#强制删除本地分支（没有合并的分支也删除）" class="headerlink" title="强制删除本地分支（没有合并的分支也删除）"></a>强制删除本地分支（没有合并的分支也删除）</h2><p>[heweiwei@heweiwei yprobe-c]$ git branch -D heweiwei_dial</p>
-<h2 id="合并分支-用-git-merge-命令来进行合并"><a href="#合并分支-用-git-merge-命令来进行合并" class="headerlink" title="合并分支  用 git merge 命令来进行合并"></a>合并分支  用 git merge 命令来进行合并</h2><p>[heweiwei@heweiwei yprobe-c]$ git add edns_dial-1.1.1.8/*<br>[heweiwei@heweiwei yprobe-c]$ git commit -m “edns_dial-1.1.1.8 have three log”<br>[heweiwei@heweiwei yprobe-c]$ git checkout enterprise<br>[heweiwei@heweiwei yprobe-c]$ git merge heweiwei_dial<br>[heweiwei@heweiwei yprobe-c]$ git branch -d heweiwei_dial<br>Deleted branch heweiwei_dial (was 39dc1df).<br>[heweiwei@heweiwei yprobe-c]$ git push         // 推到远程服务器<br>[heweiwei@heweiwei yprobe-c]$ git push origin master.dev        // 推到远程服务器具体某个分支</p>
-<h2 id="回退到上一个版本"><a href="#回退到上一个版本" class="headerlink" title="回退到上一个版本"></a>回退到上一个版本</h2><p>[heweiwei@heweiwei yprobe-c]$ git reset –hard HEAD^<br>HEAD is now at 1475127 打rpm包和集成服务自启动<br>上上一个版本就是HEAD^^，当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100</p>
-<p>git log –pretty=oneline<br>[heweiwei@heweiwei yprobe-c]$ git log –pretty=oneline<br>147512720038d1a40776abae7d119565c36c4451 打rpm包和集成服务自启动<br>9623de89e686da18311aa26312ad43be1eb07f91 反向代理的https方式拨测的指定端口改变<br>635c41264d788acaae9530306611032fc7b74bfa Fix Makefile: libthrift.a (v-0.9.0)<br>80126458120dd8c3499af945b45572b1117e7272 拨测频繁切换，thrift通信架构<br>只要命令行窗口还没有被关掉，你就可以顺着往上找啊找啊，找到那个append GPL的commit id是3628164…，</p>
-<h2 id="回退到你想回的版本"><a href="#回退到你想回的版本" class="headerlink" title="回退到你想回的版本"></a>回退到你想回的版本</h2><p>[heweiwei@heweiwei dial_cpp]$ git reset –hard 1475127<br>HEAD is now at 1475127 打rpm包和集成服务自启动<br>HEAD指向的版本就是当前版本，因此，Git允许我们在版本的历史之间穿梭，使用命令git reset –hard commit_id。<br>穿梭前，用git log可以查看提交历史，以便确定要回退到哪个版本。<br>要重返未来，用git reflog查看命令历史，以便确定要回到未来的哪个版本。</p>
-<p>若要查看各个分支最后一个提交对象的信息，运行 git branch -v：</p>
-<p>将远程版本库回滚到上一个版本  或者回滚到以前某个版本</p>
-<p>git reset –hard HEAD^    或者 git reset –hard “commit ID”<br>git push origin master -f</p>
-<h2 id="git-clone-git-192-168-8-253-yrdns-git-递归代码"><a href="#git-clone-git-192-168-8-253-yrdns-git-递归代码" class="headerlink" title="git clone git@192.168.8.253:yrdns.git 递归代码"></a>git clone git@192.168.8.253:yrdns.git 递归代码</h2><h2 id="git-clone-ssh-git-192-168-8-253-61112-clib-git-clib库"><a href="#git-clone-ssh-git-192-168-8-253-61112-clib-git-clib库" class="headerlink" title="git clone ssh://git@192.168.8.253:61112/clib.git  clib库"></a>git clone ssh://git@192.168.8.253:61112/clib.git  clib库</h2><p>增加了授权功能<br>[heweiwei@heweiwei yrdnsl]$ git pull origin master.dev<br>From 192.168.8.253:yrdns</p>
-<ul>
-<li>branch            master.dev -&gt; FETCH_HEAD<br>Updating 536db80..83eafe8<br>Fast-forward<br>.gitignore             |    3 +<br>Makefile.in.temp       |    1 +<br>conf/yrdns.conf        |   21 +-<br>include/yr_cache.h     |    4 +-<br>include/yr_config.h    |   92 ++-<br>include/yr_hash.h      |    1 +<br>include/yr_ini.h       |    2 +-<br>include/yr_job.h       |    1 +<br>include/yr_log.h       |    4 +<br>include/yr_packet.h    |    2 +<br>include/yr_recursing.h |    2 +<br>include/yr_stat.h      |    5 +<br>include/zone.h         |  528 +++++++<br>src/Makefile           |    2 +-<br>src/yr_cache.c         |  121 +-<br>src/yr_config.c        | 1281 ++++++++++++++++-<br>src/yr_forwarder.c     |    2 +-<br>src/yr_hash.c          |    9 +-<br>src/yr_iphash.c        |    3 +-<br>src/yr_iterator.c      |  117 +-<br>src/yr_job.c           |  232 ++–<br>src/yr_log.c           |  111 ++-<br>src/yr_recursing.c     |   54 +-<br>src/yr_thrift.c        |   10 +-<br>src/yr_view.c          |    4 +-<br>src/zone.c             | 3747 ++++++++++++++++++++++++++++++++++++++++++++++++<br>version                |    2 +-<br>27 files changed, 6049 insertions(+), 312 deletions(-)<br>create mode 100644 include/zone.h<br>create mode 100644 src/zone.c</li>
-</ul>
-
-          
+          作为一个好的linux下码农git是必备工具，
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/09/19/我的git使用/">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
