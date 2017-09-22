@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Microsoft YaHei:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="linux基础,atomic,linux内核," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="在任何处理器平台下，都会有一些原子性操作，供操作系统使用，我们这里只讲x86下面的。">
+<meta name="keywords" content="linux基础,atomic,linux内核">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux内核之原子操作">
+<meta property="og:url" content="http://heweiblog.top/2017/09/20/linux内核之原子操作/index.html">
+<meta property="og:site_name" content="走在启程的路上">
+<meta property="og:description" content="在任何处理器平台下，都会有一些原子性操作，供操作系统使用，我们这里只讲x86下面的。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-09-22T22:30:55.857Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux内核之原子操作">
+<meta name="twitter:description" content="在任何处理器平台下，都会有一些原子性操作，供操作系统使用，我们这里只讲x86下面的。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://heweiblog.top/2017/09/20/linux内核之原子操作/"/>
+
+
+
+
+
+  <title>linux内核之原子操作 | 走在启程的路上</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">走在启程的路上</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">前进</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://heweiblog.top/2017/09/20/linux内核之原子操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="贺伟伟">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/mouse.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="走在启程的路上">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">linux内核之原子操作</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-20T10:11:44+08:00">
+                2017-09-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux内核/" itemprop="url" rel="index">
+                    <span itemprop="name">linux内核</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/09/20/linux内核之原子操作/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/09/20/linux内核之原子操作/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  在任何处理器平台下，都会有一些原子性操作，供操作系统使用，我们这里只讲x86下面的。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <a id="more"></a>
+<p>在单处理器情况下，每条指令的执行都是原子性的，但在多处理器情况下，只有那些单独的读操作或写操作才是原子性的。为了弥补这一缺点，x86提供了附加的lock前缀，使带lock前缀的读修改写指令也能原子性执行。带lock前缀的指令在操作时会锁住总线，使自身的执行即使在多处理器间也是原子性执行的。xchg指令不带lock前缀也是原子性执行，也就是说xchg执行时默认会锁内存总线。原子性操作是线程间同步的基础，linux专门定义了一种只进行原子操作的类型atomic_t，并提供相关的原子读写调用API。本节就来分析这些原子操作在x86下的实现。</p>
+<ol>
+<li>typedef struct {  </li>
+<li>volatile int counter;  </li>
+<li>} atomic_t;<br>原子类型其实是int类型，只是禁止寄存器对其暂存。</li>
+<li>#define ATOMIC_INIT(i)  { (i) }<br>原子类型的初始化。32位x86平台下atomic API在arch/x86/include/asm/atomic_32.h中实现。</li>
+<li>static inline int atomic_read(const atomic_t *v)  </li>
+<li>{  </li>
+<li>return v-&gt;counter;  </li>
+<li>}  </li>
+<li></li>
+<li>static inline void atomic_set(atomic_t *v, int i)  </li>
+<li>{  </li>
+<li>v-&gt;counter = i;  </li>
+<li>}<br>单独的读操作或者写操作，在x86下都是原子性的。</li>
+<li>static inline void atomic_add(int i, atomic_t *v)  </li>
+<li>{  </li>
+<li>asm volatile(LOCK_PREFIX “addl %1,%0”  </li>
+<li>: “+m” (v-&gt;counter)  </li>
+<li>: “ir” (i));  </li>
+<li>}  </li>
+<li></li>
+<li>static inline void atomic_sub(int i, atomic_t *v)  </li>
+<li>{  </li>
+<li>asm volatile(LOCK_PREFIX “subl %1,%0”  </li>
+<li>: “+m” (v-&gt;counter)  </li>
+<li>: “ir” (i));  </li>
+<li>}<br>atomic_add和atomic_sub属于读修改写操作，实现时需要加lock前缀。</li>
+<li>static inline int atomic_sub_and_test(int i, atomic_t *v)  </li>
+<li>{  </li>
+<li>unsigned char c;  </li>
+<li></li>
+<li>asm volatile(LOCK_PREFIX “subl %2,%0; sete %1”  </li>
+<li>: “+m” (v-&gt;counter), “=qm” (c)  </li>
+<li>: “ir” (i) : “memory”);  </li>
+<li>return c;  </li>
+<li>}<br>atomic_sub_and_test执行完减操作后检查结果是否为0。</li>
+<li>static inline void atomic_inc(atomic_t *v)  </li>
+<li>{  </li>
+<li>asm volatile(LOCK_PREFIX “incl %0”  </li>
+<li>: “+m” (v-&gt;counter));  </li>
+<li>}  </li>
+<li></li>
+<li>static inline void atomic_dec(atomic_t *v)  </li>
+<li>{  </li>
+<li>asm volatile(LOCK_PREFIX “decl %0”  </li>
+<li>: “+m” (v-&gt;counter));  </li>
+<li>}<br>atomic_inc和atomic_dec是递增递减操作。</li>
+<li>static inline int atomic_dec_and_test(atomic_t *v)  </li>
+<li>{  </li>
+<li>unsigned char c;  </li>
+<li></li>
+<li>asm volatile(LOCK_PREFIX “decl %0; sete %1”  </li>
+<li>: “+m” (v-&gt;counter), “=qm” (c)  </li>
+<li>: : “memory”);  </li>
+<li>return c != 0;  </li>
+<li>}<br>atomic_dec_and_test在递减后检查结果是否为0。</li>
+<li>static inline int atomic_inc_and_test(atomic_t *v)  </li>
+<li>{  </li>
+<li>unsigned char c;  </li>
+<li></li>
+<li>asm volatile(LOCK_PREFIX “incl %0; sete %1”  </li>
+<li>: “+m” (v-&gt;counter), “=qm” (c)  </li>
+<li>: : “memory”);  </li>
+<li>return c != 0;  </li>
+<li>}<br>atomic_inc_and_test在递增后检查结果是否为0。</li>
+<li>static inline int atomic_add_negative(int i, atomic_t *v)  </li>
+<li>{  </li>
+<li>unsigned char c;  </li>
+<li></li>
+<li>asm volatile(LOCK_PREFIX “addl %2,%0; sets %1”  </li>
+<li>: “+m” (v-&gt;counter), “=qm” (c)  </li>
+<li>: “ir” (i) : “memory”);  </li>
+<li>return c;  </li>
+<li>}<br>atomic_add_negative在加操作后检查结果是否为负数。</li>
+<li>static inline int atomic_add_return(int i, atomic_t *v)  </li>
+<li>{  </li>
+<li>int __i;  </li>
+<li>#ifdef CONFIG_M386   </li>
+<li>unsigned long flags;  </li>
+<li>if (unlikely(boot_cpu_data.x86 &lt;= 3))  </li>
+<li>goto no_xadd;  </li>
+<li>#endif   </li>
+<li>/<em> Modern 486+ processor </em>/  </li>
+<li>__i = i;  </li>
+<li>asm volatile(LOCK_PREFIX “xaddl %0, %1”  </li>
+<li>: “+r” (i), “+m” (v-&gt;counter)  </li>
+<li>: : “memory”);  </li>
+<li>return i + __i;  </li>
+<li></li>
+<li>#ifdef CONFIG_M386   </li>
+<li>no_xadd: /<em> Legacy 386 processor </em>/  </li>
+<li>local_irq_save(flags);  </li>
+<li>__i = atomic_read(v);  </li>
+<li>atomic_set(v, i + __i);  </li>
+<li>local_irq_restore(flags);  </li>
+<li>return i + __i;  </li>
+<li>#endif   </li>
+<li>}<br>atomic_add_return 不仅执行加操作，而且把相加的结果返回。它是通过xadd这一指令实现的。</li>
+<li>static inline int atomic_sub_return(int i, atomic_t *v)  </li>
+<li>{  </li>
+<li>return atomic_add_return(-i, v);  </li>
+<li>}<br>atomic_sub_return 不仅执行减操作，而且把相减的结果返回。它是通过atomic_add_return实现的。</li>
+<li>static inline int atomic_cmpxchg(atomic_t *v, int old, int new)  </li>
+<li>{  </li>
+<li>return cmpxchg(&amp;v-&gt;counter, old, new);  </li>
+<li>}  </li>
+<li></li>
+<li>#define cmpxchg(ptr, o, n)                      \   </li>
+<li>((<strong>typeof</strong>(*(ptr)))__cmpxchg((ptr), (unsigned long)(o),   \  </li>
+<li>(unsigned long)(n),      \  </li>
+<li>sizeof(*(ptr))))  </li>
+<li></li>
+<li>static inline unsigned long __cmpxchg(volatile void *ptr, unsigned long old,  </li>
+<li>unsigned long new, int size)  </li>
+<li>{  </li>
+<li>unsigned long prev;  </li>
+<li>switch (size) {  </li>
+<li>case 1:  </li>
+<li>asm volatile(LOCK_PREFIX “cmpxchgb %b1,%2”  </li>
+<li>: “=a”(prev)  </li>
+<li>: “q”(new), “m”(*__xg(ptr)), “0”(old)  </li>
+<li>: “memory”);  </li>
+<li>return prev;  </li>
+<li>case 2:  </li>
+<li>asm volatile(LOCK_PREFIX “cmpxchgw %w1,%2”  </li>
+<li>: “=a”(prev)  </li>
+<li>: “r”(new), “m”(*__xg(ptr)), “0”(old)  </li>
+<li>: “memory”);  </li>
+<li>return prev;  </li>
+<li>case 4:  </li>
+<li>asm volatile(LOCK_PREFIX “cmpxchgl %k1,%2”  </li>
+<li>: “=a”(prev)  </li>
+<li>: “r”(new), “m”(*__xg(ptr)), “0”(old)  </li>
+<li>: “memory”);  </li>
+<li>return prev;  </li>
+<li>case 8:  </li>
+<li>asm volatile(LOCK_PREFIX “cmpxchgq %1,%2”  </li>
+<li>: “=a”(prev)  </li>
+<li>: “r”(new), “m”(*__xg(ptr)), “0”(old)  </li>
+<li>: “memory”);  </li>
+<li>return prev;  </li>
+<li>}  </li>
+<li>return old;  </li>
+<li>}<br>atomic_cmpxchg是由cmpxchg指令完成的。它把旧值同atomic_t类型的值相比较，如果相同，就把新值存入atomic_t类型的值中，返回atomic_t类型变量中原有的值。</li>
+<li>static inline int atomic_xchg(atomic_t *v, int new)  </li>
+<li>{  </li>
+<li>return xchg(&amp;v-&gt;counter, new);  </li>
+<li>}  </li>
+<li></li>
+<li>#define xchg(ptr, v)                            \   </li>
+<li>((<strong>typeof</strong>(<em>(ptr)))__xchg((unsigned long)(v), (ptr), sizeof(</em>(ptr))))  </li>
+<li></li>
+<li>static inline unsigned long __xchg(unsigned long x, volatile void *ptr,  </li>
+<li>int size)  </li>
+<li>{  </li>
+<li>switch (size) {  </li>
+<li>case 1:  </li>
+<li>asm volatile(“xchgb %b0,%1”  </li>
+<li>: “=q” (x)  </li>
+<li>: “m” (*__xg(ptr)), “0” (x)  </li>
+<li>: “memory”);  </li>
+<li>break;  </li>
+<li>case 2:  </li>
+<li>asm volatile(“xchgw %w0,%1”  </li>
+<li>: “=r” (x)  </li>
+<li>: “m” (*__xg(ptr)), “0” (x)  </li>
+<li>: “memory”);  </li>
+<li>break;  </li>
+<li>case 4:  </li>
+<li>asm volatile(“xchgl %k0,%1”  </li>
+<li>: “=r” (x)  </li>
+<li>: “m” (*__xg(ptr)), “0” (x)  </li>
+<li>: “memory”);  </li>
+<li>break;  </li>
+<li>case 8:  </li>
+<li>asm volatile(“xchgq %0,%1”  </li>
+<li>: “=r” (x)  </li>
+<li>: “m” (*__xg(ptr)), “0” (x)  </li>
+<li>: “memory”);  </li>
+<li>break;  </li>
+<li>}  </li>
+<li>return x;  </li>
+<li>}<br>atomic_xchg则是将新值存入atomic_t类型的变量，并将变量的旧值返回。它使用xchg指令实现。</li>
+<li>/** </li>
+<li><ul>
+<li>atomic_add_unless - add unless the number is already a given value </li>
+</ul>
+</li>
+<li><ul>
+<li>@v: pointer of type atomic_t </li>
+</ul>
+</li>
+<li><ul>
+<li>@a: the amount to add to v… </li>
+</ul>
+</li>
+<li><ul>
+<li>@u: …unless v is equal to u. </li>
+</ul>
+</li>
+<li>* </li>
+<li><ul>
+<li>Atomically adds @a to @v, so long as @v was not already @u. </li>
+</ul>
+</li>
+<li><ul>
+<li>Returns non-zero if @v was not @u, and zero otherwise. </li>
+</ul>
+</li>
+<li>*/  </li>
+<li>static inline int atomic_add_unless(atomic_t *v, int a, int u)  </li>
+<li>{  </li>
+<li>int c, old;  </li>
+<li>c = atomic_read(v);  </li>
+<li>for (;;) {  </li>
+<li>if (unlikely(c == (u)))  </li>
+<li>break;  </li>
+<li>old = atomic_cmpxchg((v), c, c + (a));  </li>
+<li>if (likely(old == c))  </li>
+<li>break;  </li>
+<li>c = old;  </li>
+<li>}  </li>
+<li>return c != (u);  </li>
+<li>}<br>atomic_add_unless的功能比较特殊。它检查v是否等于u，如果不是则把v的值加上a，返回值表示相加前v是否等于u。因为在atomic_read和atomic_cmpxchg中间可能有其它的写操作，所以要循环检查自己的值是否被写进去。</li>
+<li>#define atomic_inc_not_zero(v) atomic_add_unless((v), 1, 0)   </li>
+<li></li>
+<li>#define atomic_inc_return(v)  (atomic_add_return(1, v))   </li>
+<li>#define atomic_dec_return(v)  (atomic_sub_return(1, v))<br>atomic_inc_not_zero在v值不是0时加1。<br>atomic_inc_return对v值加1，并返回相加结果。<br>atomic_dec_return对v值减1，并返回相减结果。</li>
+<li>#define atomic_clear_mask(mask, addr)               \   </li>
+<li>asm volatile(LOCK_PREFIX “andl %0,%1”           \  </li>
+<li>: : “r” (~(mask)), “m” (*(addr)) : “memory”)<br>atomic_clear_mask清除变量某些位。</li>
+<li>#define atomic_set_mask(mask, addr)             \   </li>
+<li>asm volatile(LOCK_PREFIX “orl %0,%1”                \  </li>
+<li>: : “r” (mask), “m” (*(addr)) : “memory”)<br>atomic_set_mask将变量的某些位置位。</li>
+<li>/<em> Atomic operations are already serializing on x86 </em>/  </li>
+<li>#define smp_mb__before_atomic_dec() barrier()   </li>
+<li>#define smp_mb__after_atomic_dec()  barrier()   </li>
+<li>#define smp_mb__before_atomic_inc() barrier()   </li>
+<li>#define smp_mb__after_atomic_inc()  barrier()<br>因为x86的atomic操作大多使用原子指令或者带lock前缀的指令。带lock前缀的指令执行前会完成之前的读写操作，对于原子操作来说不会受之前对同一位置的读写操作，所以这里只是用空操作barrier()代替。barrier()的作用相当于告诉编译器这里有一个内存屏障，放弃在寄存器中的暂存值，重新从内存中读入。<br>本节的atomic_t类型操作是最基础的，为了介绍下面的内容，必须先介绍它。如果可以使用atomic_t类型代替临界区操作，也可以加快不少速度。</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/mouse.jpg" alt="贺伟伟 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>不断学习，不断成长，进步在于积累，一起分享知识！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>记录学习点滴，沉淀美好生活，支持原创！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wx.jpg" alt="贺伟伟 WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/zfb.jpg" alt="贺伟伟 Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    贺伟伟
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://heweiblog.top/2017/09/20/linux内核之原子操作/" title="linux内核之原子操作">http://heweiblog.top/2017/09/20/linux内核之原子操作/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux基础/" rel="tag"># linux基础</a>
+          
+            <a href="/tags/atomic/" rel="tag"># atomic</a>
+          
+            <a href="/tags/linux内核/" rel="tag"># linux内核</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/19/我的git使用/" rel="next" title="我的git使用">
+                <i class="fa fa-chevron-left"></i> 我的git使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/22/我的Makefile总结/" rel="prev" title="我的Makefile总结">
+                我的Makefile总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微薄</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/images/mouse.jpg"
+              alt="贺伟伟" />
+          
+            <p class="site-author-name" itemprop="name">贺伟伟</p>
+            <p class="site-description motion-element" itemprop="description">一条咸鱼</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/heweiblog" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://mail.qq.com.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.baidu.com" title="百度" target="_blank">百度</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.weibo.com" title="微博" target="_blank">微博</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.douban.com" title="豆瓣" target="_blank">豆瓣</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhihu.com" title="知乎" target="_blank">知乎</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.cnblogs.com/" title="博客园" target="_blank">博客园</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://bbs.51cto.com/" title="51cto" target="_blank">51cto</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.csdn.net" title="CSDN" target="_blank">CSDN</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://hexo.io" title="Hexo" target="_blank">Hexo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://v.qq.com/cartoon/" title="腾讯动漫" target="_blank">腾讯动漫</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017.9 &mdash; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">贺伟伟</span>
+
+  
+</div>
+
+
+  <div class="powered-by">  个人专属</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">博客 &mdash;  v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://heweiblog.top/2017/09/20/linux内核之原子操作/';
+          this.page.identifier = '2017/09/20/linux内核之原子操作/';
+          this.page.title = 'linux内核之原子操作';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.2"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -4,6 +4,99 @@
 
     
   <url>
+    <loc>http://heweiblog.top/2017/09/12/linux%E5%8E%8B%E7%BC%A9%E5%91%BD%E4%BB%A4/</loc>
+    <lastmod>2017-09-22T23:40:18.773Z</lastmod>
+    <data>
+        <display>
+        <title>linux压缩命令</title>
+        <pubTime>2017-09-12T01:41:44.000Z</pubTime>
+        
+        <tag>压缩</tag>
+         
+        <tag>tar</tag>
+         
+        <tag>gzip</tag>
+         
+         
+           
+             
+              <breadCrumb title="linux命令" url="http://heweiblog.top/categories/linux%E5%91%BD%E4%BB%A4/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://heweiblog.top/2017/09/19/%E6%88%91%E7%9A%84git%E4%BD%BF%E7%94%A8/</loc>
+    <lastmod>2017-09-22T22:30:55.857Z</lastmod>
+    <data>
+        <display>
+        <title>我的git使用</title>
+        <pubTime>2017-09-19T02:48:43.000Z</pubTime>
+        
+        <tag>git</tag>
+         
+         
+           
+             
+              <breadCrumb title="开发工具" url="http://heweiblog.top/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://heweiblog.top/2017/09/22/%E6%88%91%E7%9A%84Makefile%E6%80%BB%E7%BB%93/</loc>
+    <lastmod>2017-09-22T22:30:55.857Z</lastmod>
+    <data>
+        <display>
+        <title>我的Makefile总结</title>
+        <pubTime>2017-09-22T01:40:37.000Z</pubTime>
+        
+        <tag>inux</tag>
+         
+        <tag>makefile</tag>
+         
+         
+           
+             
+              <breadCrumb title="linux基础" url="http://heweiblog.top/categories/linux%E5%9F%BA%E7%A1%80/"/>
+          
+             
+              <breadCrumb title="Makefile" url="http://heweiblog.top/categories/linux%E5%9F%BA%E7%A1%80/Makefile/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://heweiblog.top/2017/09/20/linux%E5%86%85%E6%A0%B8%E4%B9%8B%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C/</loc>
+    <lastmod>2017-09-22T22:30:55.857Z</lastmod>
+    <data>
+        <display>
+        <title>linux内核之原子操作</title>
+        <pubTime>2017-09-20T02:11:44.000Z</pubTime>
+        
+        <tag>linux基础</tag>
+         
+        <tag>atomic</tag>
+         
+        <tag>linux内核</tag>
+         
+         
+           
+             
+              <breadCrumb title="linux内核" url="http://heweiblog.top/categories/linux%E5%86%85%E6%A0%B8/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://heweiblog.top/2017/09/11/%E5%AE%89%E8%A3%85python3-5/</loc>
     <lastmod>2017-09-15T23:08:49.631Z</lastmod>
     <data>
@@ -41,30 +134,6 @@
            
              
               <breadCrumb title="linux基础" url="http://heweiblog.top/categories/linux%E5%9F%BA%E7%A1%80/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://heweiblog.top/2017/09/12/linux%E5%8E%8B%E7%BC%A9%E5%91%BD%E4%BB%A4/</loc>
-    <lastmod>2017-09-15T23:08:49.631Z</lastmod>
-    <data>
-        <display>
-        <title>linux压缩命令</title>
-        <pubTime>2017-09-12T01:41:44.000Z</pubTime>
-        
-        <tag>压缩</tag>
-         
-        <tag>tar</tag>
-         
-        <tag>gzip</tag>
-         
-         
-           
-             
-              <breadCrumb title="linux命令" url="http://heweiblog.top/categories/linux%E5%91%BD%E4%BB%A4/"/>
           
         </display>
     </data>
